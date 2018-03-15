@@ -61,4 +61,5 @@ typings/
 build/
 .nuxt/
 server/config/index.js
+server/wechat/config.wechat.js
 .DS_Store

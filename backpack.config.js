@@ -1,6 +1,6 @@
 module.exports = {
   webpack: (config, options, webpack) => {
-    config.entry.main = './server/index.js'
+    config.entry.main = ['./server/index.js', './server/wechat/server.js']
 
     // Add NODE_PATH to webpack.
     // https://webpack.js.org/configuration/resolve/#resolve-modules
