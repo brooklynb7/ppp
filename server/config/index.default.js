@@ -25,6 +25,7 @@ export default {
     options: {}
   },
   session: {
+    a: 'a',
     secretKey: 'something'
   }
 }

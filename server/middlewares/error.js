@@ -1,6 +1,7 @@
 'use strict'
 
 const pageNotFound = (ctx) => {
+  ctx.status = 404
   switch (ctx.type) {
     case 'application/json':
       ctx.body = {
@@ -37,7 +38,7 @@ const error = async (ctx, next) => {
     }
   } catch (err) {
     internalError(ctx)
-    // ctx.app.emit('error', err, ctx)
+    ctx.app.emit('error', err, ctx)
   }
 }
 
