@@ -57,3 +57,8 @@ typings/
 # dotenv environment variables file
 .env
 
+.vscode/
+build/
+.nuxt/
+server/config/index.js
+.DS_Store
