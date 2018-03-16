@@ -1,5 +1,5 @@
 // https://nuxtjs.org/api/configuration-build
-const baseUrl = process.env.NODE_ENV === 'production' ? '/axy' : '/'
+// const baseUrl = process.env.NODE_ENV !== 'production' ? '/axy' : '/'
 
 module.exports = {
   /*
@@ -21,9 +21,6 @@ module.exports = {
     ]
   },
   srcDir: 'client/',
-  router: {
-    base: baseUrl
-  },
   env: {
     HOST_URL: process.env.HOST_URL || 'http://127.0.0.1:3030'
   },
