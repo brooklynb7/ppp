@@ -15,6 +15,7 @@ export default {
   token: wechatConfig.token,
   appId: wechatConfig.appId,
   appSecret: wechatConfig.appSecret,
+  aseKey: wechatConfig.aseKey,
   account: wechatConfig.account,
   msgType: {
     event: 'event',
@@ -55,6 +56,14 @@ export default {
     zhuye: {
       name: '微主页',
       url: 'http://www.anxinyi.cn/wechat-hospital/#/tab/zhuye'
+    },
+    doctorMe: {
+      name: '个人信息',
+      url: 'http://www.anxinyi.cn/axy/doctor'
+    },
+    familyMe: {
+      name: '个人信息',
+      url: 'http://www.anxinyi.cn/axy/family'
     },
     scanQR: {
       name: '扫一扫',

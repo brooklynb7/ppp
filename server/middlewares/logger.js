@@ -13,6 +13,8 @@ export default app => {
     const logTime = moment().format('YYYY-MM-DD HH:mm:ss')
     if (status !== undefined) {
       console.log(`[${logTime}] ${method} ${status} ${apiPath} ${time} ${size}`)
+    } else {
+      console.log(str)
     }
   }))
 }
