@@ -1,14 +1,16 @@
 'use strict'
 
 import mount from 'koa-mount'
-import Router from 'koa-trie-router'
+import Router from 'koa-router'
 import wechatApi from './controller'
 
-const apiRouter = new Router()
+const apiRouter = new Router({
+  prefix: '/api/wechat'
+})
 
 export default app => {
-  apiRouter.get('/api/wechat/createMenu', wechatApi.createMenu)
-  apiRouter.get('/api/wechat/test', wechatApi.test)
-  app.use(apiRouter.middleware())
+  apiRouter.get('/createMenu', wechatApi.createMenu)
+  apiRouter.get('/test', wechatApi.test)
+  app.use(apiRouter.routes())
   app.use(mount('/api/wechat', wechatApi.index))
 }

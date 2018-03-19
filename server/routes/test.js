@@ -1,14 +1,15 @@
 'use strict'
 
-import mount from 'koa-mount'
-import Router from 'koa-trie-router'
+import Router from 'koa-router'
 
-const apiRouter = new Router()
+const apiRouter = new Router({
+  prefix: '/api/test'
+})
 
 export default app => {
   apiRouter.get('/', async ctx => {
     ctx.body = { test: 1 }
   })
 
-  app.use(mount('/api/test', apiRouter.middleware()))
+  app.use(apiRouter.routes())
 }

@@ -1,10 +1,9 @@
 <template lang="pug">
-  nuxt-child
+  h1 后台管理
 </template>
 
 <script>
 export default {
-  layout: 'admin',
   data: () => {
     return { name: 'world' }
   }

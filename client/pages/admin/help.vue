@@ -1,12 +1,12 @@
 <template lang="pug">
-  nuxt-child
+  div
+    h1 帮助
 </template>
 
 <script>
 export default {
-  layout: 'admin',
   data: () => {
-    return { name: 'world' }
+    return { name: 'test' }
   }
 }
 </script>

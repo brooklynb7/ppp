@@ -10,9 +10,11 @@ import error from './error'
 import apiJson from './api-json'
 import logger from './logger'
 import nuxt from './nuxt'
+import session from './session'
 
 export default (app) => {
   parser(app)
+  session(app)
   serve(app)
   logger(app)
   apiJson(app)
