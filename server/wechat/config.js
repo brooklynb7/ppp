@@ -59,7 +59,7 @@ export default {
     },
     doctorMe: {
       name: '个人信息',
-      url: 'http://www.anxinyi.cn/axy/doctor'
+      url: createWechatOAuthUrl('/doctor')
     },
     familyMe: {
       name: '个人信息',

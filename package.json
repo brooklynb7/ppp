@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "backpack dev",
     "build": "nuxt build && backpack build",
+    "buildKoa": "backpack build",
     "start": "cross-env NODE_ENV=production node build/main.js"
   },
   "repository": {
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/brooklynb7/ppp#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "bluebird": "^3.5.1",
     "chalk": "^2.3.2",
     "co-wechat": "^2.3.0",
     "co-wechat-api": "^3.3.4",
@@ -32,6 +34,7 @@
     "koa-csrf": "^3.0.6",
     "koa-logger": "^3.2.0",
     "koa-mount": "^3.0.0",
+    "koa-passport": "^4.0.1",
     "koa-router": "^7.4.0",
     "koa-session": "^5.8.1",
     "koa-session-mongoose": "^2.0.5",
@@ -41,6 +44,8 @@
     "mongoose": "^5.0.10",
     "mongoose-deep-populate": "^3.1.1",
     "nuxt": "^1.4.0",
+    "passport-local": "^1.0.0",
+    "passport-wechat": "^2.0.4",
     "pug": "^2.0.1",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",

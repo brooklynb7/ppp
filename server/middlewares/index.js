@@ -11,10 +11,12 @@ import apiJson from './api-json'
 import logger from './logger'
 import nuxt from './nuxt'
 import session from './session'
+import passport from './passport'
 
-export default (app) => {
+export default (app, dbConnection) => {
+  session(app, dbConnection)
+  passport(app)
   parser(app)
-  session(app)
   serve(app)
   logger(app)
   apiJson(app)
