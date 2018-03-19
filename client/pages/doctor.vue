@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  h1 建设中!
+  h1 建设中!  
   nuxt-child
 </template>
 

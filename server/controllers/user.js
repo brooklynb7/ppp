@@ -5,7 +5,6 @@ import UserService from '../services/user'
 
 const login = async (ctx) => {
   ctx.body = 'login'
-  // return ctx.login({ _id: 'a', name: 'a' })
 }
 
 const signinWechat = async (ctx) => {
