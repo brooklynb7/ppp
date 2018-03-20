@@ -3,8 +3,42 @@
 import passport from 'koa-passport'
 import UserService from '../services/user'
 
+/* API Controller */
+const addDefaultUser = async (ctx) => {
+  // https://vuetifyjs.com/static/doc-images/logo.svg
+  try {
+    const user = await UserService.addUser({
+      username: 'test',
+      password: '123456',
+      gender: 2,
+      avatar: 'https://vuetifyjs.com/static/doc-images/logo.svg',
+      name: 'Michael Jordan',
+      email: 'test@163.com',
+      provider: 'local'
+    })
+    ctx.body = user
+  } catch (err) {
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
+/* Auth Controller */
+
 const login = async (ctx) => {
-  ctx.body = 'login'
+  return passport.authenticate('local', {
+    badRequestMessage: '请输入用户名和密码'
+  }, function (err, user, info) {
+    if (err) {
+      return ctx.throw(err)
+    } else if (!user) {
+      ctx.body = info
+      ctx.status = 401
+    } else {
+      ctx.body = user
+      return ctx.login(user)
+    }
+  })(ctx)
 }
 
 const signinWechat = async (ctx) => {
@@ -78,5 +112,5 @@ const saveOAuthUserProfile = async (providerUserProfile, done) => {
  */
 
 export default {
-  saveOAuthUserProfile, signinWechat, login
+  saveOAuthUserProfile, signinWechat, login, addDefaultUser
 }

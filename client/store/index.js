@@ -1,31 +1,45 @@
-'use strict'
-import Vuex from 'vuex'
+export const state = () => ({
+  user: null,
+  isAuthenticated: false
+})
 
-const createStore = () => {
-  return new Vuex.Store({
-    state: {
-      counter: 0,
-      authUser: {
-        name: 'test',
-        avatar: 'https://avatars0.githubusercontent.com/u/9064066?v=4&s=460'
-      }
-    },
-    mutations: {
-      increment (state) {
-        state.counter++
-      },
-      setUser: function (state, user) {
-        state.authUser = user
-      }
-    },
-    actions: {
-      nuxtServerInit ({ commit }, { req }) {
-        if (req.state.user) {
-          commit('setUser', req.state.user)
-        }
-      }
-    }
-  })
+export const mutations = {
+  setUser (state, user) {
+    state.user = user || null
+  },
+  setAuthenticated (state, isAuthenticated) {
+    state.isAuthenticated = isAuthenticated
+  }
 }
 
-export default createStore
+export const actions = {
+  // nuxtServerInit is called by Nuxt.js before server-rendering every page
+  nuxtServerInit ({ commit }, { req }) {
+    console.log(req.state.user)
+    if (req.state.user) {
+      commit('setUser', req.state.user)
+      commit('setAuthenticated', true)
+    } else {
+      commit('setUser', null)
+      commit('setAuthenticated', false)
+    }
+  },
+  async login ({ commit }, { username, password }) {
+    try {
+      const user = await this.$axios.$post('/auth/login', { username, password })
+      commit('setUser', user)
+      commit('setAuthenticated', true)
+    } catch (error) {
+      commit('setUser', null)
+      commit('setAuthenticated', false)
+      throw error.response.data.message
+    }
+  },
+
+  async logout ({ commit }) {
+    // await axios.post('/api/logout')
+    commit('setUser', null)
+    commit('setAuthenticated', false)
+  }
+
+}

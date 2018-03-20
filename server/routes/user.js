@@ -15,9 +15,11 @@ export default app => {
   apiRouter.get('/', async (ctx) => {
     ctx.body = { user: 1 }
   })
-  // apiRouter.get('/default/add', admin.addDefaultAdmin)
+
+  apiRouter.get('/default/add', UserController.addDefaultUser)
+
   authRouter.get('/wechat', UserController.signinWechat)
-  authRouter.get('/login', UserController.login)
+  authRouter.post('/login', UserController.login)
 
   app.use(apiRouter.routes())
 

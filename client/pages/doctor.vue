@@ -7,6 +7,7 @@ div
 <script>
 export default {
   layout: 'doctor',
+  middleware: 'authenticated',
   data: () => {
     return { name: 'world' }
   }

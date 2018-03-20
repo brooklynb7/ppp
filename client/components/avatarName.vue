@@ -1,11 +1,21 @@
 <template lang="pug">
-  div
+  div(v-if="$store.state.isAuthenticated")
     v-btn(icon,large)
       v-avatar(size="32px")
-          img(:src="$store.state.authUser.avatar",alt="")
-    strong(v-html="$store.state.authUser.name")
+          img(:src="avatar",alt="")
+    strong(v-html="name")
 </template>
 
 <script>
-export default {}
+export default {
+  computed: {
+    // a computed getter
+    avatar: function() {
+      return this.$store.state.user ? this.$store.state.user.avatar : ''
+    },
+    name: function() {
+      return this.$store.state.user ? this.$store.state.user.name : ''
+    }
+  }
+}
 </script>

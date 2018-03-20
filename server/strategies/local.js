@@ -17,13 +17,9 @@ const init = () => {
     try {
       const user = await UserService.findLocalUserByUserName(username)
       if (!user) {
-        return done(null, false, {
-          message: '该用户不存在'
-        })
+        return done(null, false, { message: '该用户不存在' })
       } else if (!user.authenticate(password)) {
-        return done(null, false, {
-          message: '用户名/密码不正确'
-        })
+        return done(null, false, { message: '用户名/密码不正确' })
       } else {
         return done(null, user)
       }

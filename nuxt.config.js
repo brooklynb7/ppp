@@ -39,5 +39,13 @@ module.exports = {
   build: {
     vendor: ['~/plugins/vuetify.js'],
     extractCSS: true
+  },
+  modules: [
+    '@nuxtjs/axios'
+  ],
+
+  axios: {
+    port: 3030
+    // proxyHeaders: false
   }
 }
