@@ -63,7 +63,7 @@ export default {
     },
     familyMe: {
       name: '个人信息',
-      url: 'http://www.anxinyi.cn/axy/family'
+      url: createWechatOAuthUrl('/family')
     },
     scanQR: {
       name: '扫一扫',
