@@ -2,13 +2,14 @@
 
 import Router from 'koa-router'
 import UserController from '../controllers/user'
+import nuxtConfig from '../../nuxt.config'
 
 const apiRouter = new Router({
-  prefix: '/api/users'
+  prefix: `${nuxtConfig.router.base}api/users`
 })
 
 const authRouter = new Router({
-  prefix: '/auth'
+  prefix: `${nuxtConfig.router.base}auth`
 })
 
 export default app => {

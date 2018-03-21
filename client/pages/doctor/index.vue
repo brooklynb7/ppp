@@ -1,13 +1,10 @@
 <template lang="pug">
 div
-  h1 建设中!
-  nuxt-child
+  v-btn(color="primary",nuxt,to="/doctor/camera") 相机
 </template>
 
 <script>
 export default {
-  layout: 'family',
-  middleware: 'authenticated',
   data: () => {
     return { name: 'world' }
   }

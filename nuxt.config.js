@@ -1,7 +1,13 @@
 // https://nuxtjs.org/api/configuration-build
-// const baseUrl = process.env.NODE_ENV !== 'production' ? '/axy' : '/'
+const basePath = process.env.NODE_ENV === 'production' ? '/axy/' : '/'
+const axiosPort = process.env.NODE_ENV === 'production' ? '80' : '3030'
+const axiosHost = process.env.NODE_ENV === 'production' ? 'www.anxinyi.cn' : 'localhost'
+const axiosPrefix = process.env.NODE_ENV === 'production' ? '/axy' : '/'
 
 module.exports = {
+  router: {
+    base: basePath
+  },
   /*
   ** Headers of the page
   */
@@ -13,16 +19,21 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js Koa project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/static/favicon.ico' },
+      {
+        rel: 'icon', type: 'image/x-icon', href: '/static/favicon.ico'
+      },
       {
         rel: 'stylesheet',
         href: 'https://fonts.loli.net/css?family=Roboto:300,400,500,700|Material+Icons'
       }
+    ],
+    script: [
+      { src: 'http://res.wx.qq.com/open/js/jweixin-1.2.0.js' }
     ]
   },
   srcDir: 'client/',
   env: {
-    HOST_URL: process.env.HOST_URL || 'http://127.0.0.1:3030'
+    basePath: basePath
   },
   /*
   ** Global CSS
@@ -45,7 +56,9 @@ module.exports = {
   ],
 
   axios: {
-    port: 3030
+    port: axiosPort,
+    host: axiosHost,
+    prefix: axiosPrefix
     // proxyHeaders: false
   }
 }

@@ -1,7 +1,5 @@
 <template lang="pug">
-div
-  h1 建设中!  
-  nuxt-child
+nuxt-child
 </template>
 
 <script>

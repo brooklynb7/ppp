@@ -14,8 +14,8 @@ v-app
             v-flex(xs12,class="text-xs-right")
               v-btn(:loading="loading",color="teal",dark, @click="login") 登录
             v-flex(xs12)
-              p(class="error", dark, v-if="showError") {{ errorMsg }}
-              // v-alert(type="error", :value="showError") {{ errorMsg }}
+              // p(class="error", dark, v-if="showError") {{ errorMsg }}
+              v-alert(type="error", :value="showError") {{ errorMsg }}
 </template>
 
 <script>
@@ -28,20 +28,20 @@ export default {
     loading: false
   }),
   methods: {
-    async login({ params, query }) {
+    async login({ params, query, env }) {
       this.loading = true
       try {
         await this.$store.dispatch('login', {
           username: this.username,
           password: this.password
         })
-        // redirect('/')
         this.username = ''
         this.password = ''
         this.errorMsg = ''
         this.showError = false
-        this.$nuxt.$router.replace({ path: this.$route.query.cb || '/' })
-        this.$nuxt.$forceUpdate()
+        this.$nuxt.$router.replace({
+          path: this.$route.query.cb || env.basePath
+        })
       } catch (emsg) {
         this.errorMsg = emsg
         this.showError = true

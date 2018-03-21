@@ -2,9 +2,10 @@
 
 import Router from 'koa-router'
 import admin from '../controllers/admin'
+import nuxtConfig from '../../nuxt.config'
 
 const apiRouter = new Router({
-  prefix: '/api/admins'
+  prefix: `${nuxtConfig.router.base}api/admins`
 })
 
 export default app => {

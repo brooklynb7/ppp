@@ -1,9 +1,10 @@
 'use strict'
 
 import Router from 'koa-router'
+import nuxtConfig from '../../nuxt.config'
 
 const apiRouter = new Router({
-  prefix: '/api/test'
+  prefix: `${nuxtConfig.router.base}api/test`
 })
 
 export default app => {
