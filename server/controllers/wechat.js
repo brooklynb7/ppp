@@ -1,6 +1,7 @@
 'use strict'
 
 import WechatService from '../services/wechat'
+import PhotoService from '../services/photo'
 import fs from 'fs-extra'
 import path from 'path'
 import * as _ from 'lodash'
@@ -31,8 +32,13 @@ const retrieveWxImgs = async (ctx) => {
 
     try {
       await Promise.all(_.map(retrievedWxImgsBuffer, (wxImg, idx) => {
-        const filePath = path.resolve(`./static/photos/${ctx.state.user._id}/${Date.now()}-${idx}.png`)
-        return fs.outputFile(filePath, wxImg)
+        const fileName = `${Date.now()}-${idx}.png`
+        const filePath = path.resolve(`./static/photos/${ctx.state.user._id}/${fileName}`)
+        fs.outputFile(filePath, wxImg)
+        return PhotoService.addPhoto({
+          fileName: fileName,
+          user: ctx.state.user._id
+        })
       }))
     } catch (err) {
       console.log(err)
