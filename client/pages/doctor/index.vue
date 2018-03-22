@@ -1,12 +1,14 @@
 <template lang="pug">
-div
-  v-btn(color="primary",nuxt,to="/doctor/camera") 相机
+v-layout
+  strong(v-html="name")
 </template>
 
 <script>
 export default {
-  data: () => {
-    return { name: 'world' }
+  computed: {
+    name: function() {
+      return this.$store.state.user ? this.$store.state.user.name : ''
+    }
   }
 }
 </script>

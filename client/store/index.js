@@ -1,6 +1,7 @@
 export const state = () => ({
   user: null,
-  isAuthenticated: false
+  isAuthenticated: false,
+  wechatJsConfig: null
 })
 
 export const mutations = {
@@ -9,6 +10,9 @@ export const mutations = {
   },
   setAuthenticated (state, isAuthenticated) {
     state.isAuthenticated = isAuthenticated
+  },
+  setWechatJsConfig (state, config) {
+    state.wechatJsConfig = config || null
   }
 }
 
@@ -23,6 +27,16 @@ export const actions = {
       commit('setAuthenticated', false)
     }
   },
+
+  async getWechatJsConfig ({ commit }, { url }) {
+    try {
+      const jsConfig = await this.$axios.$get(`/api/weixin/jsconfig?url=${url}`)
+      commit('setWechatJsConfig', jsConfig)
+    } catch (error) {
+      throw error.response
+    }
+  },
+
   async login ({ commit }, { username, password }) {
     try {
       const user = await this.$axios.$post('/auth/login', { username, password })

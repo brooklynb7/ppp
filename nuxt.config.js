@@ -1,5 +1,6 @@
 // https://nuxtjs.org/api/configuration-build
 const basePath = process.env.NODE_ENV === 'production' ? '/axy/' : '/'
+const host = process.env.NODE_ENV === 'production' ? 'http://www.anxinyi.cn/axy' : 'http://localhost:3030'
 const axiosPort = process.env.NODE_ENV === 'production' ? '80' : '3030'
 const axiosHost = process.env.NODE_ENV === 'production' ? 'www.anxinyi.cn' : 'localhost'
 const axiosPrefix = process.env.NODE_ENV === 'production' ? '/axy' : '/'
@@ -15,7 +16,7 @@ module.exports = {
     title: '安心易',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no' },
       { hid: 'description', name: 'description', content: 'Nuxt.js Koa project' }
     ],
     link: [
@@ -33,7 +34,8 @@ module.exports = {
   },
   srcDir: 'client/',
   env: {
-    basePath: basePath
+    basePath: basePath,
+    host: host
   },
   /*
   ** Global CSS

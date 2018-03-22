@@ -1,5 +1,5 @@
 'use strict'
-import config from './../wechat/config'
+import config from '../wechat/config'
 import API from 'co-wechat-api'
 const api = new API(config.appId, config.appSecret)
 

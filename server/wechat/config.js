@@ -61,6 +61,10 @@ export default {
       name: '个人信息',
       url: createWechatOAuthUrl('/doctor')
     },
+    doctorCamera: {
+      name: '拍照',
+      url: createWechatOAuthUrl('/doctor/camera')
+    },
     familyMe: {
       name: '个人信息',
       url: createWechatOAuthUrl('/family')

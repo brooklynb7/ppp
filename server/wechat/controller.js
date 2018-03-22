@@ -123,7 +123,11 @@ const createMenu = async (ctx) => {
         'type': 'view',
         'name': menuButton.doctorMe.name,
         'url': menuButton.doctorMe.url
-      }]
+      }, {
+        'type': 'view',
+        'name': menuButton.doctorCamera.name,
+        'url': menuButton.doctorCamera.url
+      } ]
     }, {
       'name': menuButton.menu3.name,
       'sub_button': [{
