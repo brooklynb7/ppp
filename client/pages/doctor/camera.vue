@@ -19,7 +19,8 @@ export default {
     return {
       msgs: ['Debug messages:'],
       imgs: [],
-      wxUploadImgIdx: 0
+      wxUploadImgIdx: 0,
+      wxServerImgIds: []
     }
   },
   async fetch(context) {
@@ -48,6 +49,12 @@ export default {
     },
     incrementWxUploadImgIdx() {
       this.wxUploadImgIdx++
+    },
+    clearWxServerImgIds() {
+      this.wxServerImgIds = []
+    },
+    appendWxServerImgId(id) {
+      this.wxServerImgIds.push(id)
     },
     appendMsg(msg) {
       this.msgs.push(msg)
@@ -84,6 +91,7 @@ export default {
         success: function(res) {
           var serverId = res.serverId // 返回图片的服务器端ID
           that.incrementWxUploadImgIdx()
+          that.appendWxServerImgId(serverId)
           that.appendMsg(`Uploaded img server id:${res.serverId}`)
 
           if (that.wxUploadImgIdx < imgs.length) {
@@ -91,18 +99,31 @@ export default {
               that.uploadImgs(imgs)
             }, 1)
           } else {
-            that.clearWxUploadImgIdx()
             that.appendMsg(
               `Finish uploading ${imgs.length} images to wx server`
             )
+            that.retrieveWxServerImgs(that.wxServerImgIds)
+            that.clearWxServerImgIds()
+            that.clearWxUploadImgIdx()
           }
         },
         fail: function(res) {
           //获取多媒体id失败 返回错误代码
           that.appendMsg(JSON.stringify(res))
           that.clearWxUploadImgIdx()
+          that.clearWxServerImgIds()
         }
       })
+    },
+    async retrieveWxServerImgs(wxServerImgs) {
+      this.appendMsg(`Retrieving wxImgs ${wxServerImgs.join(',')}`)
+
+      try {
+        await this.$store.dispatch('retrieveWxImg', wxServerImgs)
+        this.appendMsg(`Retrieved wxImgs`)
+      } catch (err) {
+        this.appendMsg(`Retrieve wxImgs error ${JSON.stringify(err)}`)
+      }
     }
   }
 }

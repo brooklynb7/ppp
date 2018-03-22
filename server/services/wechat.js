@@ -11,6 +11,10 @@ const getJsConfig = async (params) => {
   })
 }
 
+const getMedia = async (mediaId) => {
+  return api.getMedia(mediaId)
+}
+
 export default {
-  getJsConfig
+  getJsConfig, getMedia
 }

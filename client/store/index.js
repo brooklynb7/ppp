@@ -37,6 +37,17 @@ export const actions = {
     }
   },
 
+  async retrieveWxImg ({ commit }, mediaIds) {
+    try {
+      const rst = await this.$axios.$post(`/api/weixin/retrieveimgs`, {
+        mediaIds: mediaIds.join(',')
+      })
+      console.log(rst)
+    } catch (error) {
+      throw error.response
+    }
+  },
+
   async login ({ commit }, { username, password }) {
     try {
       const user = await this.$axios.$post('/auth/login', { username, password })
