@@ -40,7 +40,7 @@ module.exports = {
   /*
   ** Global CSS
   */
-  plugins: ['~/plugins/vuetify.js'],
+  plugins: ['~/plugins/vuetify.js', '~/plugins/api.js'],
   css: ['~/assets/style/app.styl'],
   /*
   ** Customize the progress bar color
@@ -50,7 +50,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    vendor: ['~/plugins/vuetify.js'],
+    vendor: ['~/plugins/vuetify.js', '~/plugins/api.js'],
     extractCSS: true
   },
   modules: [

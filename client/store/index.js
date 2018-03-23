@@ -30,19 +30,8 @@ export const actions = {
 
   async getWechatJsConfig ({ commit }, { url }) {
     try {
-      const jsConfig = await this.$axios.$get(`/api/weixin/jsconfig?url=${url}`)
+      const jsConfig = await this.$api.getWechatJsConfig(url)
       commit('setWechatJsConfig', jsConfig)
-    } catch (error) {
-      throw error.response
-    }
-  },
-
-  async retrieveWxImg ({ commit }, mediaIds) {
-    try {
-      const rst = await this.$axios.$post(`/api/weixin/retrieveimgs`, {
-        mediaIds: mediaIds.join(',')
-      })
-      console.log(rst)
     } catch (error) {
       throw error.response
     }
@@ -50,7 +39,7 @@ export const actions = {
 
   async login ({ commit }, { username, password }) {
     try {
-      const user = await this.$axios.$post('/auth/login', { username, password })
+      const user = await this.$api.login({ username, password })
       commit('setUser', user)
       commit('setAuthenticated', true)
     } catch (error) {

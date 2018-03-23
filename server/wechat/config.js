@@ -33,45 +33,37 @@ export default {
   subscribeMsg: '感谢您的关注',
   menuButton: {
     menu1: {
-      name: '我是家属'
+      name: '我是家长'
     },
     menu2: {
-      name: '我是医生'
+      name: '我是老师'
     },
     menu3: {
-      name: '微医院'
+      name: '意见反馈'
     },
-    luntan: {
-      name: '医学论团',
-      url: 'http://www.anxinyi.cn'
+    teacherMe: {
+      name: '个人设置',
+      url: createWechatOAuthUrl('/teacher')
     },
-    jiuzhen: {
-      name: '预约就诊',
-      url: 'http://www.anxinyi.cn/wechat-hospital/#/tab/jiuzhen'
-    },
-    wode: {
-      name: '我的信息',
-      url: 'http://www.anxinyi.cn/wechat-hospital/#/tab/wode'
-    },
-    zhuye: {
-      name: '微主页',
-      url: 'http://www.anxinyi.cn/wechat-hospital/#/tab/zhuye'
-    },
-    doctorMe: {
-      name: '个人信息',
-      url: createWechatOAuthUrl('/doctor')
-    },
-    doctorCamera: {
+    teacherCamera: {
       name: '拍照',
-      url: createWechatOAuthUrl('/doctor/camera')
+      url: createWechatOAuthUrl('/teacher/camera')
     },
-    familyMe: {
-      name: '个人信息',
-      url: createWechatOAuthUrl('/family')
+    teacherPhotos: {
+      name: '我的相册',
+      url: createWechatOAuthUrl('/teacher/photos')
     },
-    scanQR: {
-      name: '扫一扫',
-      url: createWechatOAuthUrl('/scanqrcode')
+    parentMe: {
+      name: '我的设置',
+      url: createWechatOAuthUrl('/parent')
+    },
+    doFeedback: {
+      name: '我要反馈',
+      url: createWechatOAuthUrl('/feedback')
+    },
+    myFeedback: {
+      name: '我的反馈',
+      url: createWechatOAuthUrl('/feedback/mine')
     }
   }
 }

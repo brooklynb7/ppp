@@ -4,7 +4,7 @@ nuxt-child
 
 <script>
 export default {
-  layout: 'doctor',
+  layout: 'parent',
   middleware: 'authenticated',
   data: () => {
     return { name: 'world' }

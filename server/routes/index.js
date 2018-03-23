@@ -1,10 +1,10 @@
 'use strict'
 
-import test from './test'
 import admin from './admin'
 import user from './user'
 import wechat from './wechat'
+import doctor from './doctor'
 
 export default {
-  test, admin, user, wechat
+  admin, user, wechat, doctor
 }

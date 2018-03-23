@@ -1,8 +1,6 @@
 <template lang="pug">
 div
-  h1 Hello {{ name }}!
-  v-btn(@click="test") Test
-  button(@click="test") Test
+  h1 Hello {{ name }}!  
   nuxt-child
 </template>
 

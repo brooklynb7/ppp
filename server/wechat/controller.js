@@ -22,7 +22,7 @@ MessageHandler.prototype.isSubscribeEvent = function () {
   }
 }
 
-MessageHandler.prototype.is_scan_event = function () {
+MessageHandler.prototype.isScanEvent = function () {
   if (this.message.MsgType === config.msgType.event &&
     this.message.Event === config.event.scan) {
     return true
@@ -31,7 +31,7 @@ MessageHandler.prototype.is_scan_event = function () {
   }
 }
 
-MessageHandler.prototype.is_location_event = function () {
+MessageHandler.prototype.isLocationEvent = function () {
   if (this.message.MsgType === config.msgType.location) {
     return true
   } else {
@@ -114,38 +114,34 @@ const createMenu = async (ctx) => {
       'name': menuButton.menu1.name,
       'sub_button': [{
         'type': 'view',
-        'name': menuButton.familyMe.name,
-        'url': menuButton.familyMe.url
+        'name': menuButton.parentMe.name,
+        'url': menuButton.parentMe.url
       }]
     }, {
       'name': menuButton.menu2.name,
       'sub_button': [{
         'type': 'view',
-        'name': menuButton.doctorMe.name,
-        'url': menuButton.doctorMe.url
+        'name': menuButton.teacherMe.name,
+        'url': menuButton.teacherMe.url
       }, {
         'type': 'view',
-        'name': menuButton.doctorCamera.name,
-        'url': menuButton.doctorCamera.url
-      } ]
+        'name': menuButton.teacherPhotos.name,
+        'url': menuButton.teacherPhotos.url
+      }, {
+        'type': 'view',
+        'name': menuButton.teacherCamera.name,
+        'url': menuButton.teacherCamera.url
+      }]
     }, {
       'name': menuButton.menu3.name,
       'sub_button': [{
         'type': 'view',
-        'name': menuButton.luntan.name,
-        'url': menuButton.luntan.url
+        'name': menuButton.myFeedback.name,
+        'url': menuButton.myFeedback.url
       }, {
         'type': 'view',
-        'name': menuButton.jiuzhen.name,
-        'url': menuButton.jiuzhen.url
-      }, {
-        'type': 'view',
-        'name': menuButton.wode.name,
-        'url': menuButton.wode.url
-      }, {
-        'type': 'view',
-        'name': menuButton.zhuye.name,
-        'url': menuButton.zhuye.url
+        'name': menuButton.doFeedback.name,
+        'url': menuButton.doFeedback.url
       }]
     }]
   })

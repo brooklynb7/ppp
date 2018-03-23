@@ -21,7 +21,7 @@ const retrieveWxImg = async (ctx) => {
   await PhotoService.saveWxImgByBuffer({
     wxImg: retrievedWxImg,
     fileName: fileName,
-    userId: ctx.state.user._id
+    userId: userId
   })
   PhotoService.addPhoto({
     fileName: fileName,
