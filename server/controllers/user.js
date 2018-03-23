@@ -2,21 +2,38 @@
 
 import passport from 'koa-passport'
 import UserService from '../services/user'
+import PhotoService from '../services/photo'
 
 /* API Controller */
 const addDefaultUser = async (ctx) => {
   // https://vuetifyjs.com/static/doc-images/logo.svg
   try {
     const user = await UserService.addUser({
-      username: 'test',
+      username: 'test1',
       password: '123456',
       gender: 2,
       avatar: 'https://vuetifyjs.com/static/doc-images/logo.svg',
-      name: 'Michael Jordan',
+      name: 'Alan Smith',
       email: 'test@163.com',
       provider: 'local'
     })
     ctx.body = user
+  } catch (err) {
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
+/* Me API Controller */
+const getMyPhotos = async (ctx) => {
+  try {
+    const photos = await PhotoService.queryPhoto({
+      query: {
+        user: ctx.state.user._id.toString()
+      },
+      sort: '-createTime'
+    })
+    ctx.body = photos
   } catch (err) {
     ctx.status = 500
     ctx.body = err
@@ -112,5 +129,5 @@ const saveOAuthUserProfile = async (providerUserProfile, done) => {
  */
 
 export default {
-  saveOAuthUserProfile, signinWechat, login, addDefaultUser
+  saveOAuthUserProfile, signinWechat, login, addDefaultUser, getMyPhotos
 }

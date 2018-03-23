@@ -14,7 +14,7 @@ export default {
     return {}
   },
   async asyncData({ app }) {
-    let photos = await app.$api.getPhotos()
+    let photos = await app.$api.getMyPhotos()
     photos = _.map(photos.results, photo => {
       photo.src = `./static/photos/${photo.user}/small/${photo.fileName}`
       return photo

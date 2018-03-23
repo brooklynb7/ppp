@@ -74,6 +74,14 @@ var UserSchema = new Schema({
     default: '',
     trim: true
   },
+  isTeacher: {
+    type: Boolean,
+    default: false
+  },
+  isParent: {
+    type: Boolean,
+    default: false
+  },
   provider: {
     type: String,
     required: 'Provider is required'

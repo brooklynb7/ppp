@@ -11,7 +11,7 @@
     v-toolbar(app,color="blue darken-3",dark,:clipped-left="$vuetify.breakpoint.lgAndUp",fixed)
       v-toolbar-title(style="width:300px", class="ml-0 pl-3")
         v-toolbar-side-icon(@click.stop="drawer = !drawer")
-        span(class="hidden-sm-and-down") 后台管理
+        span 后台管理
     v-content
       v-container(fluid,fill-height)
         v-layout(align-content-start,justify-start)
@@ -23,7 +23,9 @@ export default {
   data: () => ({
     drawer: null,
     items: [
-      { icon: 'person', text: '用户管理', link: '/admin/admins' },
+      { icon: 'view_list', text: '班级管理', link: '/admin/banjis' },
+      { icon: 'person', text: '用户管理', link: '/admin/users' },
+      { icon: 'feedback', text: '意见反馈', link: '/admin/feedbacks' },
       { icon: 'help', text: '帮助', link: '/admin/help' }
     ]
   }),

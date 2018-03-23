@@ -1,6 +1,8 @@
 export const state = () => ({
   user: null,
   isAuthenticated: false,
+  admin: null,
+  isAuthAdmin: false,
   wechatJsConfig: null
 })
 
@@ -10,6 +12,12 @@ export const mutations = {
   },
   setAuthenticated (state, isAuthenticated) {
     state.isAuthenticated = isAuthenticated
+  },
+  setAdmin (state, admin) {
+    state.admin = admin || null
+  },
+  setAuthAdmin (state, isAuthAdmin) {
+    state.isAuthAdmin = isAuthAdmin
   },
   setWechatJsConfig (state, config) {
     state.wechatJsConfig = config || null

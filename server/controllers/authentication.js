@@ -15,6 +15,17 @@ const requireAuthApi = (ctx, next) => {
   }
 }
 
+const requireAdminAuthApi = (ctx, next) => {
+  if (ctx.state.admin) {
+    return next()
+  } else {
+    ctx.status = 401
+    ctx.body = {
+      message: 'Admin API not authenticated'
+    }
+  }
+}
+
 export default {
-  requireAuthApi
+  requireAuthApi, requireAdminAuthApi
 }

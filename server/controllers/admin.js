@@ -1,9 +1,10 @@
 'use strict'
 
 import AdminService from '../services/admin'
+import util from '../utils'
 
 /*
- * API controllers
+ * API Controller
  */
 
 const queryAdmin = async (ctx) => {
@@ -29,6 +30,28 @@ const addDefaultAdmin = async (ctx) => {
   }
 }
 
+/* Auth Controller */
+const login = async (ctx) => {
+  try {
+    const name = ctx.body.username
+    const password = util.md5(ctx.body.password)
+    const admin = await AdminService.findAdmin({ name, password })
+    ctx.state.admin = admin
+    if (admin) {
+      ctx.body = admin
+    } else {
+      ctx.status = 401
+      ctx.body = {
+        message: 'Admin Unauthenticated'
+      }
+    }
+  } catch (err) {
+    ctx.state.admin = null
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
 export default {
-  queryAdmin, addDefaultAdmin
+  queryAdmin, addDefaultAdmin, login
 }

@@ -4,6 +4,9 @@ const apiFactory = axios => ({
   login ({ username, password }) {
     return axios.$post('/auth/login', { username, password })
   },
+  loginAdmin ({ username, password }) {
+    return axios.$post('/auth/loginAdmin', { username, password })
+  },
   getWechatJsConfig (url) {
     return axios.$get(`/api/weixin/jsconfig?url=${url}`)
   },
@@ -12,8 +15,8 @@ const apiFactory = axios => ({
       mediaIds: mediaIds.join(',')
     })
   },
-  getPhotos () {
-    return axios.$get(`/api/doctor/myphotos`)
+  getMyPhotos () {
+    return axios.$get(`/api/me/photos`)
   }
 })
 

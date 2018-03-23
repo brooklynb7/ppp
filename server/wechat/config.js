@@ -42,7 +42,7 @@ export default {
       name: '意见反馈'
     },
     teacherMe: {
-      name: '个人设置',
+      name: '我的设置',
       url: createWechatOAuthUrl('/teacher')
     },
     teacherCamera: {
