@@ -12,6 +12,7 @@ const apiRouter = new Router({
 export default app => {
   apiRouter.get('/jsconfig', WechatController.getJsConfig)
   apiRouter.post('/retrieveimgs', AuthController.requireAuthApi, WechatController.retrieveWxImgs)
+  apiRouter.get('/retrieveimg', AuthController.requireAuthApi, WechatController.retrieveWxImg)
 
   // apiRouter.use(AuthController.requireAuthApi)
 

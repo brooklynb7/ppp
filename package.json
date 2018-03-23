@@ -52,7 +52,8 @@
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
     "require-directory": "^2.1.1",
-    "vuetify": "^1.0.8",
+    "sharp": "^0.20.1",
+    "vuetify": "^1.0.10",
     "wechat-oauth": "^1.2.1"
   },
   "devDependencies": {
