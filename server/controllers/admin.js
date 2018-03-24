@@ -33,8 +33,8 @@ const addDefaultAdmin = async (ctx) => {
 /* Auth Controller */
 const login = async (ctx) => {
   try {
-    const name = ctx.body.username
-    const password = util.md5(ctx.body.password)
+    const name = ctx.request.body.username
+    const password = util.md5(ctx.request.body.password)
     const admin = await AdminService.findAdmin({ name, password })
     ctx.state.admin = admin
     if (admin) {
@@ -42,7 +42,7 @@ const login = async (ctx) => {
     } else {
       ctx.status = 401
       ctx.body = {
-        message: 'Admin Unauthenticated'
+        message: '管理员账号密码错误'
       }
     }
   } catch (err) {

@@ -1,6 +1,6 @@
 export const state = () => ({
   user: null,
-  isAuthenticated: false,
+  isAuthUser: false,
   admin: null,
   isAuthAdmin: false,
   wechatJsConfig: null
@@ -10,8 +10,8 @@ export const mutations = {
   setUser (state, user) {
     state.user = user || null
   },
-  setAuthenticated (state, isAuthenticated) {
-    state.isAuthenticated = isAuthenticated
+  setAuthUser (state, isAuthUser) {
+    state.isAuthUser = isAuthUser
   },
   setAdmin (state, admin) {
     state.admin = admin || null
@@ -29,10 +29,18 @@ export const actions = {
   nuxtServerInit ({ commit }, { req }) {
     if (req.state.user) {
       commit('setUser', req.state.user)
-      commit('setAuthenticated', true)
+      commit('setAuthUser', true)
     } else {
       commit('setUser', null)
-      commit('setAuthenticated', false)
+      commit('setAuthUser', false)
+    }
+
+    if (req.state.admin) {
+      commit('setAdmin', req.state.admin)
+      commit('setAuthAdim', true)
+    } else {
+      commit('setAdmin', null)
+      commit('setAuthAdmin', false)
     }
   },
 
@@ -49,10 +57,22 @@ export const actions = {
     try {
       const user = await this.$api.login({ username, password })
       commit('setUser', user)
-      commit('setAuthenticated', true)
+      commit('setAuthUser', true)
     } catch (error) {
       commit('setUser', null)
-      commit('setAuthenticated', false)
+      commit('setAuthUser', false)
+      throw error.response.data.message
+    }
+  },
+
+  async loginAdmin ({ commit }, { username, password }) {
+    try {
+      const admin = await this.$api.loginAdmin({ username, password })
+      commit('setAdmin', admin)
+      commit('setAuthAdmin', true)
+    } catch (error) {
+      commit('setAdmin', null)
+      commit('setAuthAdmin', false)
       throw error.response.data.message
     }
   },
@@ -60,7 +80,7 @@ export const actions = {
   async logout ({ commit }) {
     // await axios.post('/api/logout')
     commit('setUser', null)
-    commit('setAuthenticated', false)
+    commit('setAuthUser', false)
   }
 
 }
