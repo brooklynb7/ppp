@@ -1,9 +1,9 @@
 <template lang="pug">
-  div(v-if="$store.state.isAuthUser")
-    v-btn(icon,large)
-      v-avatar(size="32px")
-          img(:src="avatar",alt="")
-    strong(v-html="name")
+div(v-if="$store.state.isAuthUser")
+  v-btn(icon,large)
+    v-avatar(size="32px")
+      img(:src="avatar",alt="")
+  strong(v-html="name")
 </template>
 
 <script>

@@ -6,6 +6,8 @@
 import mongoose from 'mongoose'
 import util from '../utils'
 import crypto from 'crypto'
+import DeepPopulate from 'mongoose-deep-populate'
+const deepPopulate = DeepPopulate(mongoose)
 
 const Schema = mongoose.Schema
 
@@ -82,6 +84,14 @@ var UserSchema = new Schema({
     type: Boolean,
     default: false
   },
+  teacherBanjis: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Banji'
+  }],
+  parentBanji: {
+    type: Schema.Types.ObjectId,
+    ref: 'Banji'
+  },
   provider: {
     type: String,
     required: 'Provider is required'
@@ -145,6 +155,14 @@ UserSchema.statics.findUniqueUsername = async function (username, suffix) {
     return _this.findUniqueUsername(username, (suffix || 0) + 1)
   }
 }
+
+UserSchema.plugin(deepPopulate, {
+  populate: {
+    'parentBanji': {
+      select: 'name'
+    }
+  }
+})
 
 export default {
   init: () => {

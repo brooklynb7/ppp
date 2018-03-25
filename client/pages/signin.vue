@@ -1,17 +1,18 @@
 <template lang="pug">
 v-app
-  v-container(fluid,fill-height)
-    v-layout(justify-center align-center)
-      v-flex(xs12,sm6,md4)
-        v-card
-          v-toolbar(dark,color="teal",justify-center)
-            v-toolbar-title(class="text-xs-center") 登录
-          v-container(fluid)
-            v-flex(xs12)
-              v-text-field(label="用户名", v-model="username", required, color="teal")
-            v-flex(xs12)
-              v-text-field(label="密码", v-model="password", type="password" required,color="teal")
-            v-flex(xs12,class="text-xs-right")
+  v-content
+    v-container(fluid,fill-height)
+      v-layout(justify-center align-center)
+        v-flex(xs12 sm8 md4)
+          v-card(class="elevation-12")
+            v-toolbar(dark,color="teal",justify-center)
+              v-toolbar-title(class="text-xs-center") 登录
+            v-card-text
+              v-form
+                v-text-field(prepend-icon="person", label="用户名", v-model="username", required, color="teal")
+                v-text-field(prepend-icon="lock",label="密码", v-model="password", type="password" required,color="teal")
+            v-card-actions
+              v-spacer
               v-btn(:loading="loading",color="teal",dark, @click="login") 登录
             v-flex(xs12)
               // p(class="error", dark, v-if="showError") {{ errorMsg }}

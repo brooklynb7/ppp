@@ -58,12 +58,6 @@ export default {
     appendMsg(msg) {
       this.msgs.push(msg)
     },
-    test() {
-      this.imgs.push(
-        'https://pbs.twimg.com/profile_images/491050769785712640/Nd_khqlu_bigger.jpeg'
-      )
-      console.log('test')
-    },
     paizhao() {
       this.imgs = []
       const that = this

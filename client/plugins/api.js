@@ -17,6 +17,21 @@ const apiFactory = axios => ({
   },
   getMyPhotos () {
     return axios.$get(`/api/me/photos`)
+  },
+  getUsers () {
+    return axios.$get(`/api/users`)
+  },
+  getTeachers () {
+    return axios.$get(`/api/users/isteacher`)
+  },
+  getParents () {
+    return axios.$get(`/api/users/isparent`)
+  },
+  updateUserIsTearch ({ id, isTeacher }) {
+    return axios.$put(`/api/users/${id}/isteacher`, { isTeacher })
+  },
+  updateUserIsParent ({ id, isParent }) {
+    return axios.$put(`/api/users/${id}/isparent`, { isParent })
   }
 })
 

@@ -5,6 +5,8 @@
  */
 import mongoose from 'mongoose'
 import util from '../utils'
+import DeepPopulate from 'mongoose-deep-populate'
+const deepPopulate = DeepPopulate(mongoose)
 
 const Schema = mongoose.Schema
 
@@ -40,6 +42,12 @@ AdminSchema.pre('save', function (next) {
     this.password = util.md5(this.password)
   }
   next()
+})
+
+AdminSchema.plugin(deepPopulate, {
+  populate: {
+
+  }
 })
 
 export default {

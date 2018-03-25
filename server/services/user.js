@@ -5,17 +5,37 @@
 
 import mongoose from 'mongoose'
 import userModel from '../models/user'
+import base from './base'
 
 userModel.init()
 
 const User = mongoose.model('User')
 
-const queryUser = async () => {
-  const rst = await Promise.all([User.count(), User.find()])
-  return {
-    count: rst[0],
-    admins: rst[1]
-  }
+const queryUser = async ({ query, sort }) => {
+  return base.queryEntryList({
+    entry: User,
+    query: query,
+    select: '-salt -password',
+    sort: sort
+  })
+}
+
+const getTeachers = async () => {
+  return base.queryEntryList({
+    entry: User,
+    query: { isTeacher: true },
+    select: '-salt -password',
+    sort: '-created'
+  })
+}
+
+const getParents = async () => {
+  return base.queryEntryList({
+    entry: User,
+    query: { isParent: true },
+    select: '-salt -password',
+    sort: '-created'
+  })
 }
 
 const findOne = async (searchOptions) => {
@@ -39,6 +59,18 @@ const findUniqueUsername = async (possibleUsername) => {
   return User.findUniqueUsername(possibleUsername, null)
 }
 
+const updateUserIsTeacher = async ({ id, isTeacher }) => {
+  return User.findOneAndUpdate({
+    _id: id
+  }, { isTeacher: !!isTeacher })
+}
+
+const updateUserIsParent = async ({ id, isParent }) => {
+  return User.findOneAndUpdate({
+    _id: id
+  }, { isParent: !!isParent })
+}
+
 const addUser = async (userOptions) => {
   const user = new User(userOptions)
   const createdUser = await user.save()
@@ -46,5 +78,14 @@ const addUser = async (userOptions) => {
 }
 
 export default {
-  queryUser, findLocalUserByUserName, findUserByUid, findOne, findUniqueUsername, addUser
+  addUser,
+  queryUser,
+  getTeachers,
+  getParents,
+  findLocalUserByUserName,
+  findUserByUid,
+  findOne,
+  findUniqueUsername,
+  updateUserIsTeacher,
+  updateUserIsParent
 }

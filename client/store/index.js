@@ -35,9 +35,9 @@ export const actions = {
       commit('setAuthUser', false)
     }
 
-    if (req.state.admin) {
-      commit('setAdmin', req.state.admin)
-      commit('setAuthAdim', true)
+    if (req.session.admin) {
+      commit('setAdmin', req.session.admin)
+      commit('setAuthAdmin', true)
     } else {
       commit('setAdmin', null)
       commit('setAuthAdmin', false)

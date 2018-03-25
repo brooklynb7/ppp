@@ -10,13 +10,17 @@ const deepPopulate = DeepPopulate(mongoose)
 const Schema = mongoose.Schema
 
 /**
- * Banji Schema
+ * Recipe Schema
  */
-const BanjiSchema = new Schema({
-  name: {
+const RecipeSchema = new Schema({
+  date: {
     type: String,
     unique: true,
     required: true
+  },
+  detail: {
+    type: String,
+    default: ''
   },
   memo: {
     type: String,
@@ -28,7 +32,7 @@ const BanjiSchema = new Schema({
   }
 })
 
-BanjiSchema.plugin(deepPopulate, {
+RecipeSchema.plugin(deepPopulate, {
   populate: {
 
   }
@@ -36,6 +40,6 @@ BanjiSchema.plugin(deepPopulate, {
 
 export default {
   init: () => {
-    mongoose.model('Banji', BanjiSchema)
+    mongoose.model('Recipe', RecipeSchema)
   }
 }

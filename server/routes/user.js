@@ -22,6 +22,11 @@ export default app => {
   meApiRouter.get('/photos', AuthController.requireAuthApi, UserController.getMyPhotos)
 
   apiRouter.get('/default/add', UserController.addDefaultUser)
+  apiRouter.get('/', AuthController.requireAdminAuthApi, UserController.queryUsers)
+  apiRouter.get('/isteacher', AuthController.requireAdminAuthApi, UserController.getTeachers)
+  apiRouter.get('/isparent', AuthController.requireAdminAuthApi, UserController.getParents)
+  apiRouter.put('/:id/isteacher', AuthController.requireAdminAuthApi, UserController.updateUserIsTeacher)
+  apiRouter.put('/:id/isparent', AuthController.requireAdminAuthApi, UserController.updateUserIsParent)
 
   authRouter.get('/wechat', UserController.signinWechat)
   authRouter.post('/login', UserController.login)

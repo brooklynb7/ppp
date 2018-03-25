@@ -9,15 +9,80 @@ const addDefaultUser = async (ctx) => {
   // https://vuetifyjs.com/static/doc-images/logo.svg
   try {
     const user = await UserService.addUser({
-      username: 'test1',
+      username: 'test2',
       password: '123456',
-      gender: 2,
+      gender: 1,
       avatar: 'https://vuetifyjs.com/static/doc-images/logo.svg',
-      name: 'Alan Smith',
+      name: 'David Beckham',
       email: 'test@163.com',
       provider: 'local'
     })
     ctx.body = user
+  } catch (err) {
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
+const queryUsers = async (ctx) => {
+  try {
+    const rst = await UserService.queryUser({
+      query: {}, sort: '-created'
+    })
+    ctx.body = rst
+  } catch (err) {
+    console.log(err)
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
+const getTeachers = async (ctx) => {
+  try {
+    const rst = await UserService.getTeachers()
+    ctx.body = rst
+  } catch (err) {
+    console.log(err)
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
+const getParents = async (ctx) => {
+  try {
+    const rst = await UserService.getParents()
+    ctx.body = rst
+  } catch (err) {
+    console.log(err)
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
+const updateUserIsTeacher = async (ctx) => {
+  try {
+    const userId = ctx.params.id
+    const isTeacher = ctx.request.body.isTeacher
+    await UserService.updateUserIsTeacher({
+      id: userId,
+      isTeacher: isTeacher
+    })
+    ctx.body = 'ok'
+  } catch (err) {
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
+const updateUserIsParent = async (ctx) => {
+  try {
+    const userId = ctx.params.id
+    const isParent = ctx.request.body.isParent
+    await UserService.updateUserIsParent({
+      id: userId,
+      isParent: isParent
+    })
+    ctx.body = 'ok'
   } catch (err) {
     ctx.status = 500
     ctx.body = err
@@ -129,5 +194,14 @@ const saveOAuthUserProfile = async (providerUserProfile, done) => {
  */
 
 export default {
-  saveOAuthUserProfile, signinWechat, login, addDefaultUser, getMyPhotos
+  login,
+  signinWechat,
+  saveOAuthUserProfile,
+  addDefaultUser,
+  queryUsers,
+  getTeachers,
+  getParents,
+  getMyPhotos,
+  updateUserIsTeacher,
+  updateUserIsParent
 }

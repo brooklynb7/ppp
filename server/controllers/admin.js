@@ -36,7 +36,7 @@ const login = async (ctx) => {
     const name = ctx.request.body.username
     const password = util.md5(ctx.request.body.password)
     const admin = await AdminService.findAdmin({ name, password })
-    ctx.state.admin = admin
+    ctx.session.admin = admin
     if (admin) {
       ctx.body = admin
     } else {
@@ -46,7 +46,7 @@ const login = async (ctx) => {
       }
     }
   } catch (err) {
-    ctx.state.admin = null
+    ctx.session.admin = null
     ctx.status = 500
     ctx.body = err
   }

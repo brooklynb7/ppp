@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 import mongoose from 'mongoose'
+import DeepPopulate from 'mongoose-deep-populate'
+const deepPopulate = DeepPopulate(mongoose)
 
 const Schema = mongoose.Schema
 
@@ -27,6 +29,12 @@ const PhotoSchema = new Schema({
   createTime: {
     type: Number,
     default: Date.now
+  }
+})
+
+PhotoSchema.plugin(deepPopulate, {
+  populate: {
+
   }
 })
 
