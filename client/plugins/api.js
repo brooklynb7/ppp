@@ -1,12 +1,14 @@
 'use strict'
 
 const apiFactory = axios => ({
+  /* Auth API */
   login ({ username, password }) {
     return axios.$post('/auth/login', { username, password })
   },
   loginAdmin ({ username, password }) {
     return axios.$post('/auth/loginAdmin', { username, password })
   },
+  /* Weixin API */
   getWechatJsConfig (url) {
     return axios.$get(`/api/weixin/jsconfig?url=${url}`)
   },
@@ -15,9 +17,11 @@ const apiFactory = axios => ({
       mediaIds: mediaIds.join(',')
     })
   },
+  /* Me API */
   getMyPhotos () {
     return axios.$get(`/api/me/photos`)
   },
+  /* User API */
   getUsers () {
     return axios.$get(`/api/users`)
   },
@@ -32,6 +36,22 @@ const apiFactory = axios => ({
   },
   updateUserIsParent ({ id, isParent }) {
     return axios.$put(`/api/users/${id}/isparent`, { isParent })
+  },
+  /* Recipe API */
+  addRecipe ({ date, detail, memo }) {
+    return axios.$post(`/api/recipes`, { date, detail, memo })
+  },
+  getRecipes () {
+    return axios.$get(`/api/recipes`)
+  },
+  getRecipesByDates (dates) {
+    return axios.$get(`/api/recipes?dates=${dates.join(',')}`)
+  },
+  updateRecipe (id, { date, detail, memo }) {
+    return axios.$put(`/api/recipes/${id}`, { date, detail, memo })
+  },
+  removeRecipe (id) {
+    return axios.$delete(`/api/recipes/${id}`)
   }
 })
 

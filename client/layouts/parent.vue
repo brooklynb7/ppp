@@ -1,13 +1,12 @@
 <template lang="pug">
   v-app
     v-toolbar(app,color="deep-purple darken-2",dark,fixed)
-      v-toolbar-title 我是家长
+      v-toolbar-title {{$store.state.parentToolbarTitle}}
       v-spacer
       avatarName
     v-content
-      v-container(fluid,fill-height)
-        v-layout(align-content-start,justify-start)
-          nuxt
+      v-container(fluid)
+        nuxt
 </template>
 
 <script>

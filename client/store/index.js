@@ -3,7 +3,8 @@ export const state = () => ({
   isAuthUser: false,
   admin: null,
   isAuthAdmin: false,
-  wechatJsConfig: null
+  wechatJsConfig: null,
+  parentToolbarTitle: '我是家长'
 })
 
 export const mutations = {
@@ -21,6 +22,9 @@ export const mutations = {
   },
   setWechatJsConfig (state, config) {
     state.wechatJsConfig = config || null
+  },
+  setParentToolbarTitle (state, title) {
+    state.parentToolbarTitle = title || '我是家长'
   }
 }
 

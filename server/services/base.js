@@ -11,13 +11,13 @@ const queryEntryList = async (options) => {
   const pageSize = options.pageSize || 0
   const sort = options.sort || ''
   const select = options.select || ''
-  // const deepPopulate = options.deepPopulate || ''
+  const deepPopulate = options.deepPopulate || ''
 
   const rst = await Promise.all([
     Entry.count(queryObj),
     Entry.find(queryObj)
       .select(select)
-      // .deepPopulate(deepPopulate)
+      .deepPopulate(deepPopulate)
       .skip(page * pageSize).limit(pageSize)
       .sort(sort)
       .exec()])

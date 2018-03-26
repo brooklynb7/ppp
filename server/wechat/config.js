@@ -53,6 +53,10 @@ export default {
       name: '我的相册',
       url: createWechatOAuthUrl('/teacher/photos')
     },
+    recipes: {
+      name: '本周食谱',
+      url: createWechatOAuthUrl('/parent/recipes')
+    },
     parentMe: {
       name: '我的设置',
       url: createWechatOAuthUrl('/parent')
