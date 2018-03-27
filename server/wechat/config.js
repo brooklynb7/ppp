@@ -53,6 +53,10 @@ export default {
       name: '我的相册',
       url: createWechatOAuthUrl('/teacher/photos')
     },
+    admin: {
+      name: '行政管理',
+      url: createWechatOAuthUrl('/admin')
+    },
     recipes: {
       name: '本周食谱',
       url: createWechatOAuthUrl('/parent/recipes')
@@ -68,6 +72,10 @@ export default {
     myFeedback: {
       name: '我的反馈',
       url: createWechatOAuthUrl('/feedback/mine')
+    },
+    test: {
+      name: 'test',
+      url: createWechatOAuthUrl('/teacher/test')
     }
   }
 }

@@ -12,6 +12,8 @@ v-layout(row,wrap)
         td {{ props.item.realName }}
         td {{ props.item.mobile }}
         td
+          v-checkbox(loading="true",v-model="props.item.isAdmin",color="primary",@click="toggleIsAdmin(props.item)")
+        td
           v-checkbox(v-model="props.item.isTeacher",color="primary",@click="toggleIsTeacher(props.item)")
         td
           v-checkbox(loading="true",v-model="props.item.isParent",color="primary",@click="toggleIsParent(props.item)")
@@ -61,6 +63,12 @@ export default {
           sortable: false,
           value: 'mobile',
           width: '180px'
+        },
+        {
+          text: '行政',
+          align: 'center',
+          sortable: false,
+          width: '5rem'
         },
         {
           text: '老师',
@@ -135,6 +143,19 @@ export default {
         this.$api.updateUserIsParent({
           id: item._id,
           isParent: !item.isParent
+        })
+      } catch (err) {
+        console.log(err)
+      } finally {
+        this.loading = false
+      }
+    },
+    async toggleIsAdmin(item) {
+      this.loading = true
+      try {
+        this.$api.updateUserIsAdmin({
+          id: item._id,
+          isAdmin: !item.isAdmin
         })
       } catch (err) {
         console.log(err)

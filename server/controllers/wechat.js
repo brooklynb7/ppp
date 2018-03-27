@@ -14,22 +14,6 @@ const getJsConfig = async (ctx) => {
   ctx.body = jsConfig
 }
 
-const retrieveWxImg = async (ctx) => {
-  const userId = ctx.state.user._id
-  const retrievedWxImg = await WechatService.getMedia('NKQUSEU3LF9dsryY4TB6Bvhs-pG4m5Wv70KnImpivLW4Mgth7Ivcu0_NUwbK80aa')
-  const fileName = `${Date.now()}-0.jpg`
-  await PhotoService.saveWxImgByBuffer({
-    wxImg: retrievedWxImg,
-    fileName: fileName,
-    userId: userId
-  })
-  PhotoService.addPhoto({
-    fileName: fileName,
-    user: userId
-  })
-  ctx.body = 's'
-}
-
 const retrieveWxImgs = async (ctx) => {
   const mediaIds = ctx.request.body.mediaIds
   const mediaIdArray = mediaIds.split(',')
@@ -66,5 +50,5 @@ const retrieveWxImgs = async (ctx) => {
 }
 
 export default {
-  getJsConfig, retrieveWxImgs, retrieveWxImg
+  getJsConfig, retrieveWxImgs
 }

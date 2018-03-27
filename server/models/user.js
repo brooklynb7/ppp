@@ -76,6 +76,10 @@ var UserSchema = new Schema({
     default: '',
     trim: true
   },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
   isTeacher: {
     type: Boolean,
     default: false

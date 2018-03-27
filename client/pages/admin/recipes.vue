@@ -59,7 +59,7 @@ div
         v-spacer
         v-btn(flat,@click="closeDialog") 取消
         v-btn(color="primary",flat,@click="saveRecipe",:loading="loadingSave") 保存
-      v-card-text
+      v-card-text(v-if="showError")
         v-alert(type="error", :value="showError") {{ errorMsg }}
 </template>
 
@@ -135,6 +135,7 @@ export default {
     },
     openDialog() {
       this.editedIndex = -1
+      this.editedItem = Object.assign({}, this.defaultItem)
       this.dialog = true
     },
     closeDialog() {

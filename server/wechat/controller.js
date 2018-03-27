@@ -125,6 +125,10 @@ const createMenu = async (ctx) => {
       'name': menuButton.menu2.name,
       'sub_button': [{
         'type': 'view',
+        'name': menuButton.admin.name,
+        'url': menuButton.admin.url
+      }, {
+        'type': 'view',
         'name': menuButton.teacherMe.name,
         'url': menuButton.teacherMe.url
       }, {
@@ -146,6 +150,10 @@ const createMenu = async (ctx) => {
         'type': 'view',
         'name': menuButton.doFeedback.name,
         'url': menuButton.doFeedback.url
+      }, {
+        'type': 'view',
+        'name': menuButton.test.name,
+        'url': menuButton.test.url
       }]
     }]
   })

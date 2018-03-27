@@ -13,11 +13,20 @@ const Schema = mongoose.Schema
  * Banji Schema
  */
 const BanjiSchema = new Schema({
+  grade: {
+    type: Number,
+    required: true,
+    default: 1
+  },
   name: {
     type: String,
-    unique: true,
+    unique: false,
     required: true
   },
+  teachers: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   memo: {
     type: String,
     default: ''
@@ -30,7 +39,9 @@ const BanjiSchema = new Schema({
 
 BanjiSchema.plugin(deepPopulate, {
   populate: {
-
+    teachers: {
+      select: 'name username realName'
+    }
   }
 })
 

@@ -5,7 +5,7 @@ nuxt-child
 <script>
 export default {
   layout: 'feedback',
-  middleware: 'authenticated',
+  middleware: 'authUser',
   data: () => {
     return { name: 'world' }
   }

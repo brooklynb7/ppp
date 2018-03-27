@@ -2,6 +2,12 @@
 
 export default function ({ route, store, redirect, env }) {
   if (!store.state.isAuthAdmin) {
-    return redirect(`${env.basePath}signinAdmin?cb=${encodeURIComponent(route.fullPath)}`)
+    if (!store.state.isAuthUser) {
+      return redirect(`${env.basePath}signinAdmin?cb=${encodeURIComponent(route.fullPath)}`)
+    } else {
+      if (!store.state.user.isAdmin) {
+        return redirect(`${env.basePath}notAdmin`)
+      }
+    }
   }
 }

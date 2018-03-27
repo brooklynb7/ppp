@@ -16,7 +16,7 @@ const requireAuthApi = (ctx, next) => {
 }
 
 const requireAdminAuthApi = (ctx, next) => {
-  if (ctx.session.admin) {
+  if (ctx.session.admin || (ctx.isAuthenticated() && ctx.state.user.isAdmin)) {
     return next()
   } else {
     ctx.status = 401

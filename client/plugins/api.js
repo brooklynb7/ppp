@@ -37,6 +37,9 @@ const apiFactory = axios => ({
   updateUserIsParent ({ id, isParent }) {
     return axios.$put(`/api/users/${id}/isparent`, { isParent })
   },
+  updateUserIsAdmin ({ id, isAdmin }) {
+    return axios.$put(`/api/users/${id}/isadmin`, { isAdmin })
+  },
   /* Recipe API */
   addRecipe ({ date, detail, memo }) {
     return axios.$post(`/api/recipes`, { date, detail, memo })
@@ -52,6 +55,16 @@ const apiFactory = axios => ({
   },
   removeRecipe (id) {
     return axios.$delete(`/api/recipes/${id}`)
+  },
+  /* Banji API */
+  addBanji ({ name, teachers, memo }) {
+    return axios.$post(`/api/banjis`, { name, teachers: teachers.join(','), memo })
+  },
+  updateBanji (id, { name, teachers, memo }) {
+    return axios.$put(`/api/banjis/${id}`, { name, teachers: teachers.join(','), memo })
+  },
+  getBanjis () {
+    return axios.$get(`/api/banjis`)
   }
 })
 

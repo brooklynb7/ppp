@@ -11,7 +11,7 @@
     v-toolbar(app,color="blue darken-3",dark,:clipped-left="$vuetify.breakpoint.lgAndUp",fixed)
       v-toolbar-title(style="width:300px", class="ml-0 pl-3")
         v-toolbar-side-icon(@click.stop="drawer = !drawer")
-        span 幼儿园后台管理
+        span(class="title") 行政管理
       v-spacer
       strong(v-if="$store.state.isAuthAdmin",v-html="$store.state.admin.name")
     v-content

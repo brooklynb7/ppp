@@ -6,35 +6,19 @@
 import mongoose from 'mongoose'
 import userModel from '../models/user'
 import base from './base'
+import * as _ from 'lodash'
 
 userModel.init()
 
 const User = mongoose.model('User')
 
+// User parts
 const queryUser = async ({ query, sort }) => {
   return base.queryEntryList({
     entry: User,
     query: query,
     select: '-salt -password',
     sort: sort
-  })
-}
-
-const getTeachers = async () => {
-  return base.queryEntryList({
-    entry: User,
-    query: { isTeacher: true },
-    select: '-salt -password',
-    sort: '-created'
-  })
-}
-
-const getParents = async () => {
-  return base.queryEntryList({
-    entry: User,
-    query: { isParent: true },
-    select: '-salt -password',
-    sort: '-created'
   })
 }
 
@@ -59,22 +43,72 @@ const findUniqueUsername = async (possibleUsername) => {
   return User.findUniqueUsername(possibleUsername, null)
 }
 
+const addUser = async (userOptions) => {
+  const user = new User(userOptions)
+  const createdUser = await user.save()
+  return createdUser
+}
+
+// Teacher parts
+const getTeachers = async () => {
+  return base.queryEntryList({
+    entry: User,
+    query: { isTeacher: true },
+    select: '-salt -password',
+    sort: '-created'
+  })
+}
+
 const updateUserIsTeacher = async ({ id, isTeacher }) => {
   return User.findOneAndUpdate({
     _id: id
   }, { isTeacher: !!isTeacher })
 }
 
+const updateUserIsAdmin = async ({ id, isAdmin }) => {
+  return User.findOneAndUpdate({
+    _id: id
+  }, { isAdmin: !!isAdmin })
+}
+
+const appendTeacherBanji = async (userId, banjiId) => {
+  const user = await findOne({
+    _id: userId
+  })
+  if (!_.includes(user.teacherBanjis, banjiId)) {
+    user.teacherBanjis.push(banjiId)
+    await user.save()
+  }
+  return user
+}
+
+const appendBanjiToTeachers = async (userIds, banjiId) => {
+  return User.update({
+    _id: {
+      $in: userIds
+    },
+    teacherBanjis: {
+      $ne: banjiId
+    }
+  }, {
+    $push: { teacherBanjis: banjiId }
+  }, { multi: true })
+}
+
+// Parent parts
+const getParents = async () => {
+  return base.queryEntryList({
+    entry: User,
+    query: { isParent: true },
+    select: '-salt -password',
+    sort: '-created'
+  })
+}
+
 const updateUserIsParent = async ({ id, isParent }) => {
   return User.findOneAndUpdate({
     _id: id
   }, { isParent: !!isParent })
-}
-
-const addUser = async (userOptions) => {
-  const user = new User(userOptions)
-  const createdUser = await user.save()
-  return createdUser
 }
 
 export default {
@@ -87,5 +121,8 @@ export default {
   findOne,
   findUniqueUsername,
   updateUserIsTeacher,
-  updateUserIsParent
+  updateUserIsParent,
+  updateUserIsAdmin,
+  appendTeacherBanji,
+  appendBanjiToTeachers
 }
