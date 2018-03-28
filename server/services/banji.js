@@ -17,7 +17,7 @@ const queryBanji = async ({ query, sort }) => {
   return base.queryEntryList({
     entry: Banji,
     query: query,
-    sort: sort || 'name',
+    sort: sort || '-year grade name',
     deepPopulate: 'teachers'
   })
 }
@@ -30,7 +30,9 @@ const addBanji = async (banjiData) => {
   const banji = new Banji({
     name: banjiData.name,
     teachers: banjiData.teachers || [],
-    memo: banjiData.memo
+    memo: banjiData.memo,
+    grade: parseInt(banjiData.grade, 10),
+    year: parseInt(banjiData.year, 10)
   })
 
   await banji.save()
@@ -38,7 +40,7 @@ const addBanji = async (banjiData) => {
   return findBanjiById(banji._id)
 }
 
-const updateBanji = async (id, { name, teachers, memo }) => {
+const updateBanji = async (id, { name, teachers, year, grade, memo }) => {
   const banji = await Banji.findById(id)
 
   // Hanlde teachers add and remove
@@ -50,8 +52,17 @@ const updateBanji = async (id, { name, teachers, memo }) => {
   console.log(newlyAdded)
   console.log(removed)
 
+  await Promise.all([
+    UserService.appendBanjiToTeachers(newlyAdded, banji._id),
+    UserService.removeBanjiFromTeachers(removed, banji._id)]
+  )
+
   await banji.update({
-    name: name
+    name: name,
+    teachers: teachers || [],
+    grade: parseInt(grade, 10),
+    year: parseInt(year, 10),
+    memo: memo
   })
   return findBanjiById(banji._id)
 }

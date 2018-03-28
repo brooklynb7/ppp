@@ -1,14 +1,13 @@
 <template lang="pug">
 div
   v-layout(row,wrap)
+    div(class="mb-2 d-inline-flex align-center")
+      span(class="title") 食谱管理
+      v-btn(small,color="primary",@click="openDialog",class="hidden-sm-and-down")
+        v-icon(small) add
+        span 添加食谱
     v-flex(xs12,sm12,md12,lg12,xl12)
-      div(class="mb-2 headline d-inline-flex align-center")
-          span(class="headline") 食谱管理
-          v-btn(small,color="primary",@click="openDialog")
-            v-icon(small) add
-            span 添加食谱
-    v-flex(xs12,sm12,md12,lg12,xl12)
-      v-data-table(:loading="loading",:items="recipes",class="elevation-1",hide-actions,:headers="headers",:no-data-text="noDataText")
+      v-data-table(class="hidden-sm-and-down",:loading="loading",:items="recipes",class="elevation-1",hide-actions,:headers="headers",:no-data-text="noDataText")
         template(slot="items", slot-scope="props")
           td {{ props.item.date }}
           td {{ props.item.detail }}
@@ -18,6 +17,25 @@ div
               v-icon(color="teal") edit
             v-btn(icon,class="mx-0",@click="deleteItem(props.item)")
               v-icon(color="pink") delete
+      v-list(two-line,class="hidden-md-and-up elevation-2")
+        template(v-for="(item, index) in recipes")
+          v-list-tile(:key="item._id")
+            v-list-tile-content
+              v-list-tile-sub-title(class="body-2") {{ item.date }}
+              v-list-tile-title {{ item.detail }}
+              v-list-tile-sub-title 备注: {{ item.memo }}
+            v-list-tile-action(class="",style="display:flex;flex-direction:row;align-items:center")
+              v-btn(small,icon,class="mx-0", @click="editItem(item)")
+                v-icon(color="teal") edit
+              v-btn(small,icon,class="mx-0",@click="deleteItem(item)")
+                v-icon(color="pink") delete
+          v-divider(v-if="index + 1 < recipes.length",:key="index")
+  v-btn(
+    class="hidden-md-and-up",
+    color="primary",
+    @click="openDialog"
+    fab,dark,bottom,right,small,fixed)
+    v-icon add
   v-dialog(v-model="dialog", max-width="500px",@keydown.esc="dialog=false")
     v-card
       v-card-title
@@ -51,7 +69,7 @@ div
               v-text-field(
                 label="食谱",
                 v-model="editedItem.detail",
-                prepend-icon="room_service",
+                prepend-icon="restaurant_menu",
                 required)
             v-flex(xs12,sm12,md12,lg12,xl12)
               v-text-field(label="备注",v-model="editedItem.memo",prepend-icon="comment")
@@ -60,7 +78,7 @@ div
         v-btn(flat,@click="closeDialog") 取消
         v-btn(color="primary",flat,@click="saveRecipe",:loading="loadingSave") 保存
       v-card-text(v-if="showError")
-        v-alert(type="error", :value="showError") {{ errorMsg }}
+        v-alert(type="error", :value="showError") {{ errorMsg }}  
 </template>
 
 <script>

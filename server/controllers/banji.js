@@ -12,6 +12,8 @@ const addBanji = async (ctx) => {
     const banjiData = {
       name: ctx.request.body.name,
       teachers: teachers ? teachers.split(',') : [],
+      grade: ctx.request.body.grade,
+      year: ctx.request.body.year,
       memo: ctx.request.body.memo
     }
 
@@ -46,7 +48,9 @@ const updateBanji = async (ctx) => {
     const banjiData = {
       name: ctx.request.body.name,
       teachers: teachers ? teachers.split(',') : [],
-      memo: ctx.request.body.memo
+      memo: ctx.request.body.memo,
+      grade: ctx.request.body.grade,
+      year: ctx.request.body.year
     }
     const rst = await BanjiService.updateBanji(ctx.params.id, banjiData)
     ctx.body = rst

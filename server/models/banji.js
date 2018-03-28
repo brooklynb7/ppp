@@ -13,6 +13,11 @@ const Schema = mongoose.Schema
  * Banji Schema
  */
 const BanjiSchema = new Schema({
+  year: {
+    type: Number,
+    required: true,
+    default: 0
+  },
   grade: {
     type: Number,
     required: true,

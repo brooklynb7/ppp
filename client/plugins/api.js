@@ -57,11 +57,11 @@ const apiFactory = axios => ({
     return axios.$delete(`/api/recipes/${id}`)
   },
   /* Banji API */
-  addBanji ({ name, teachers, memo }) {
-    return axios.$post(`/api/banjis`, { name, teachers: teachers.join(','), memo })
+  addBanji ({ year, grade, name, teachers, memo }) {
+    return axios.$post(`/api/banjis`, { name, year, grade, teachers: teachers.join(','), memo })
   },
-  updateBanji (id, { name, teachers, memo }) {
-    return axios.$put(`/api/banjis/${id}`, { name, teachers: teachers.join(','), memo })
+  updateBanji (id, { year, grade, name, teachers, memo }) {
+    return axios.$put(`/api/banjis/${id}`, { year, grade, name, teachers: teachers.join(','), memo })
   },
   getBanjis () {
     return axios.$get(`/api/banjis`)

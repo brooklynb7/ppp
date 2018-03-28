@@ -95,6 +95,17 @@ const appendBanjiToTeachers = async (userIds, banjiId) => {
   }, { multi: true })
 }
 
+const removeBanjiFromTeachers = async (userIds, banjiId) => {
+  return User.update({
+    _id: {
+      $in: userIds
+    },
+    teacherBanjis: banjiId
+  }, {
+    $pull: { teacherBanjis: banjiId }
+  }, { multi: true })
+}
+
 // Parent parts
 const getParents = async () => {
   return base.queryEntryList({
@@ -124,5 +135,6 @@ export default {
   updateUserIsParent,
   updateUserIsAdmin,
   appendTeacherBanji,
-  appendBanjiToTeachers
+  appendBanjiToTeachers,
+  removeBanjiFromTeachers
 }

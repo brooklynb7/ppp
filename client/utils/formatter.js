@@ -1,6 +1,7 @@
 'use strict'
 
 import moment from 'moment'
+import * as _ from 'lodash'
 
 const getProvider = (value) => {
   let rst = value
@@ -32,8 +33,26 @@ const getWeekdayText = (date) => {
   return list[d.weekday()]
 }
 
+const getGradeList = () => {
+  return [{ id: 1, text: '小班' }, { id: 2, text: '中班' }, { id: 3, text: '大班' }, { id: 0, text: '托班' }]
+}
+
+const getGradeText = (id) => {
+  let text = ''
+  const list = getGradeList()
+  const grade = _.find(list, (item) => {
+    return item.id === parseInt(id, 10)
+  })
+  if (grade) {
+    text = grade.text
+  }
+  return text
+}
+
 export default {
   getProvider,
   getWholeWeekdays,
-  getWeekdayText
+  getWeekdayText,
+  getGradeList,
+  getGradeText
 }

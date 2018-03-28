@@ -1,15 +1,16 @@
 <template lang="pug">
 div
   v-layout(row,wrap)
-    div(class="mb-2 headline d-inline-flex align-center")
-        span(class="headline") 班级管理
-        v-btn(small,color="primary",@click="openDialog")
-          v-icon(small) add
-          span 新建班级
+    div(class="mb-2 d-inline-flex align-center")
+      span(class="title") 班级管理
+      v-btn(small,color="primary",@click="openDialog",class="hidden-sm-and-down")
+        v-icon(small) add
+        span 新建班级
     v-flex(xs12,sm12,md12,lg12,xl12)
-      v-data-table(:loading="loading",:items="banjis",class="elevation-1",hide-actions,:headers="headers",:no-data-text="noDataText")
+      v-data-table(:loading="loading",:items="banjis",class="elevation-1 hidden-sm-and-down",hide-actions,:headers="headers",:no-data-text="noDataText")
         template(slot="items", slot-scope="props")
-          td {{ props.item.grade }}
+          td {{ props.item.year }} 届
+          td {{ getGradeText(props.item.grade) }}
           td {{ props.item.name }}
           td {{ getTeachersName(props.item.teachers) }}          
           td {{ props.item.memo }}
@@ -18,6 +19,23 @@ div
               v-icon(color="teal") edit
             v-btn(icon,class="mx-0",disabled)
               v-icon(color="pink") delete
+      v-list(two-line,class="hidden-md-and-up elevation-2")
+        template(v-for="(item, index) in banjis")
+          v-list-tile(:key="item._id")
+            v-list-tile-content
+              v-list-tile-sub-title(class="body-2") {{ item.year }}届, {{ getGradeText(item.grade) }}, {{ item.name }}
+              v-list-tile-title {{ getTeachersName(item.teachers) }}
+              v-list-tile-sub-title 备注: {{ item.memo }}
+            v-list-tile-action(class="",style="display:flex;flex-direction:row;align-items:center")
+              v-btn(small,icon,class="mx-0", @click="editItem(item)")
+                v-icon(color="teal") edit
+          v-divider(v-if="index + 1 < banjis.length",:key="index")
+  v-btn(
+    class="hidden-md-and-up",
+    color="primary",
+    @click="openDialog"
+    fab,dark,bottom,right,small,fixed)
+    v-icon add
   v-dialog(v-model="dialog", max-width="500px",@keydown.esc="dialog=false")
     v-card
       v-card-title
@@ -26,10 +44,27 @@ div
         v-container(grid-list-md)
           v-layout(wrap)
             v-flex(xs12,sm12,md12,lg12,xl12)
+              v-select(
+                prepend-icon="date_range",
+                :items="years",
+                v-model="editedItem.year",
+                label="届",
+                required
+              )
+            v-flex(xs12,sm12,md12,lg12,xl12)
+              v-select(
+                prepend-icon="grade",
+                :items="grades",
+                v-model="editedItem.grade",
+                item-value="id",
+                label="年级",
+                required
+              )
+            v-flex(xs12,sm12,md12,lg12,xl12)
               v-text-field(
                 label="班名",
                 v-model="editedItem.name",
-                prepend-icon="edit",
+                prepend-icon="class",
                 required)
             v-flex(xs12,sm12,md12,lg12,xl12)
               v-select(
@@ -54,10 +89,13 @@ div
 
 <script>
 import * as _ from 'lodash'
+import formatter from '../../utils/formatter'
 
 export default {
   data: () => {
     return {
+      years: ['2015', '2016', '2017', '2018', '2019', '2020'],
+      grades: formatter.getGradeList(),
       showError: false,
       errorMsg: '',
       loading: false,
@@ -66,25 +104,35 @@ export default {
       noDataText: '暂时没有班级数据',
       editedIndex: -1,
       editedItem: {
+        year: '',
         name: '',
         teachers: [],
         memo: ''
       },
       defaultItem: {
+        year: '',
         name: '',
         teachers: [],
         memo: ''
       },
       headers: [
         {
+          text: '届',
+          align: 'left',
+          sortable: false,
+          width: '100px'
+        },
+        {
           text: '年级',
           align: 'left',
-          sortable: false
+          sortable: false,
+          width: '100px'
         },
         {
           text: '班级',
           align: 'left',
-          sortable: false
+          sortable: false,
+          width: '200px'
         },
         {
           text: '老师',
@@ -99,7 +147,8 @@ export default {
         {
           text: '操作',
           align: 'center',
-          sortable: false
+          sortable: false,
+          width: '100px'
         }
       ],
       banjis: [],
@@ -116,6 +165,7 @@ export default {
     this.getTeachers()
   },
   methods: {
+    getGradeText: formatter.getGradeText,
     getTeachersName(teachers) {
       return _.map(teachers, teacher => {
         return teacher.realName || teacher.name || teacher.username
@@ -134,6 +184,9 @@ export default {
       try {
         const banjis = await this.$api.getBanjis()
         this.banjis = banjis.results
+        _.each(this.banjis, item => {
+          item.year = item.year.toString()
+        })
       } catch (err) {
         alert(err)
       } finally {
