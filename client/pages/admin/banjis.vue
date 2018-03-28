@@ -1,11 +1,7 @@
 <template lang="pug">
 div
-  v-layout(row,wrap)
-    div(class="mb-2 d-inline-flex align-center")
-      span(class="title") 班级管理
-      v-btn(small,color="primary",@click="openDialog",class="hidden-sm-and-down")
-        v-icon(small) add
-        span 新建班级
+  v-layout(row,wrap)   
+    listHeader(@add="openDialog",showAddBtn,title="班级管理",addText="新建班级")
     v-flex(xs12,sm12,md12,lg12,xl12)
       v-data-table(:loading="loading",:items="banjis",class="elevation-1 hidden-sm-and-down",hide-actions,:headers="headers",:no-data-text="noDataText")
         template(slot="items", slot-scope="props")
@@ -23,8 +19,8 @@ div
         template(v-for="(item, index) in banjis")
           v-list-tile(:key="item._id")
             v-list-tile-content
-              v-list-tile-sub-title(class="body-2") {{ item.year }}届, {{ getGradeText(item.grade) }}, {{ item.name }}
-              v-list-tile-title {{ getTeachersName(item.teachers) }}
+              v-list-tile-title {{ item.year }}届, {{ getGradeText(item.grade) }}, {{ item.name }}
+              v-list-tile-sub-title(class="body-2") 老师:{{ getTeachersName(item.teachers) }}
               v-list-tile-sub-title 备注: {{ item.memo }}
             v-list-tile-action(class="",style="display:flex;flex-direction:row;align-items:center")
               v-btn(small,icon,class="mx-0", @click="editItem(item)")
@@ -90,8 +86,10 @@ div
 <script>
 import * as _ from 'lodash'
 import formatter from '../../utils/formatter'
+import listHeader from '../../components/listHeader'
 
 export default {
+  components: { listHeader },
   data: () => {
     return {
       years: ['2015', '2016', '2017', '2018', '2019', '2020'],

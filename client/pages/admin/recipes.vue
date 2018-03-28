@@ -1,11 +1,7 @@
 <template lang="pug">
 div
   v-layout(row,wrap)
-    div(class="mb-2 d-inline-flex align-center")
-      span(class="title") 食谱管理
-      v-btn(small,color="primary",@click="openDialog",class="hidden-sm-and-down")
-        v-icon(small) add
-        span 添加食谱
+    listHeader(@add="openDialog",showAddBtn,title="食谱管理",addText="添加食谱")
     v-flex(xs12,sm12,md12,lg12,xl12)
       v-data-table(class="hidden-sm-and-down",:loading="loading",:items="recipes",class="elevation-1",hide-actions,:headers="headers",:no-data-text="noDataText")
         template(slot="items", slot-scope="props")
@@ -83,7 +79,9 @@ div
 
 <script>
 import moment from 'moment'
+import listHeader from '../../components/listHeader'
 export default {
+  components: { listHeader },
   data: () => {
     return {
       showError: false,

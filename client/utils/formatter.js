@@ -49,10 +49,26 @@ const getGradeText = (id) => {
   return text
 }
 
+const getRoleText = (item) => {
+  let text = []
+  if (item.isAdmin) {
+    text.push('行政')
+  }
+  if (item.isTeacher) {
+    text.push('老师')
+  }
+  if (item.isParent) {
+    text.push('家长')
+  }
+
+  return text.join(',')
+}
+
 export default {
   getProvider,
   getWholeWeekdays,
   getWeekdayText,
   getGradeList,
-  getGradeText
+  getGradeText,
+  getRoleText
 }

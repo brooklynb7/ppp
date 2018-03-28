@@ -5,9 +5,6 @@ nuxt-child
 <script>
 export default {
   layout: 'teacher',
-  middleware: 'authUser',
-  data: () => {
-    return { name: 'world' }
-  }
+  middleware: 'authTeacher'
 }
 </script>

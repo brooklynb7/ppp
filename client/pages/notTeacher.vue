@@ -1,5 +1,5 @@
 <template lang="pug">
-  unauthorization(text="您没有行政管理权限",color="blue darken-3")
+  unauthorization(text="请先申请老师权限",color="blue darken-2")
 </template>
 
 <script>
