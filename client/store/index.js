@@ -8,6 +8,16 @@ export const state = () => ({
 })
 
 export const mutations = {
+  updateParentInfo (state, { parentName, mobile, memo }) {
+    state.user.parentName = parentName
+    state.user.mobile = mobile
+    state.user.memo = memo
+  },
+  updateTeacherInfo (state, { teacherName, mobile, memo }) {
+    state.user.teacherName = teacherName
+    state.user.mobile = mobile
+    state.user.memo = memo
+  },
   setUser (state, user) {
     state.user = user || null
   },
@@ -46,6 +56,14 @@ export const actions = {
       commit('setAdmin', null)
       commit('setAuthAdmin', false)
     }
+  },
+
+  updateParentInfo ({ commit }, { parentName, mobile, memo }) {
+    commit('updateParentInfo', { parentName, mobile, memo })
+  },
+
+  updateTeacherInfo ({ commit }, { teacherName, mobile, memo }) {
+    commit('updateTeacherInfo', { teacherName, mobile, memo })
   },
 
   async getWechatJsConfig ({ commit }, { url }) {

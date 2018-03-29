@@ -5,8 +5,7 @@
       v-spacer
       avatarName
     v-content
-      v-container(fluid)
-        nuxt
+      nuxt
 </template>
 
 <script>

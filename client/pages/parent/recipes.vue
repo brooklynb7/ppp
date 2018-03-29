@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  v-container(pa-0,fluid,style="min-height: 0;",grid-list-lg)
+  v-container(fluid,grid-list-lg)
     v-layout(row,wrap)
       v-flex(xs12, v-for="recipe in recipes",:key="recipe._id")
         v-card(color="deep-purple",dark)

@@ -138,6 +138,14 @@ export default {
     this.getRecipes()
   },
   methods: {
+    showError(msg) {
+      this.showError = true
+      this.errorMsg = msg
+    },
+    clearError() {
+      this.showError = false
+      this.errorMsg = ''
+    },
     async getRecipes() {
       this.loading = true
       try {
@@ -159,6 +167,7 @@ export default {
       this.loadingSave = false
       this.editedItem = Object.assign({}, this.defaultItem)
       this.editedIndex = -1
+      this.clearError()
     },
     chooseDate(date) {
       this.$refs.menu.save(date)
@@ -189,8 +198,7 @@ export default {
         this.recipes.unshift(recipe)
         this.closeDialog()
       } catch (err) {
-        this.errorMsg = err.response.data.errmsg
-        this.showError = true
+        this.showError(err.response.data.errmsg)
       } finally {
         this.loadingSave = false
       }
@@ -204,8 +212,7 @@ export default {
         Object.assign(this.recipes[this.editedIndex], this.editedItem)
         this.closeDialog()
       } catch (err) {
-        this.errorMsg = err.response.data.errmsg
-        this.showError = true
+        this.showError(err.response.data.errmsg)
       } finally {
         this.loadingSave = false
       }

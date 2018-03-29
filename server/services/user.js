@@ -122,6 +122,12 @@ const updateUserIsParent = async ({ id, isParent }) => {
   }, { isParent: !!isParent })
 }
 
+const updateParentInfo = async (id, { parentName, mobile, memo }) => {
+  return User.findOneAndUpdate({
+    _id: id
+  }, { parentName, mobile, memo })
+}
+
 export default {
   addUser,
   queryUser,
@@ -136,5 +142,6 @@ export default {
   updateUserIsAdmin,
   appendTeacherBanji,
   appendBanjiToTeachers,
-  removeBanjiFromTeachers
+  removeBanjiFromTeachers,
+  updateParentInfo
 }

@@ -40,6 +40,9 @@ const apiFactory = axios => ({
   updateUserIsAdmin ({ id, isAdmin }) {
     return axios.$put(`/api/users/${id}/isadmin`, { isAdmin })
   },
+  updateParentInfo (id, { parentName, mobile, memo }) {
+    return axios.$put(`/api/users/${id}/parentinfo`, { parentName, mobile, memo })
+  },
   /* Recipe API */
   addRecipe ({ date, detail, memo }) {
     return axios.$post(`/api/recipes`, { date, detail, memo })

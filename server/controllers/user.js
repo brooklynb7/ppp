@@ -104,6 +104,18 @@ const updateUserIsAdmin = async (ctx) => {
   }
 }
 
+const updateParentInfo = async (ctx) => {
+  try {
+    const userId = ctx.params.id
+    const parentData = ctx.request.body
+    await UserService.updateParentInfo(userId, parentData)
+    ctx.body = 'ok'
+  } catch (err) {
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
 /* Me API Controller */
 const getMyPhotos = async (ctx) => {
   try {
@@ -219,5 +231,6 @@ export default {
   getMyPhotos,
   updateUserIsTeacher,
   updateUserIsParent,
-  updateUserIsAdmin
+  updateUserIsAdmin,
+  updateParentInfo
 }

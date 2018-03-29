@@ -163,6 +163,14 @@ export default {
     this.getTeachers()
   },
   methods: {
+    showError(msg) {
+      this.showError = true
+      this.errorMsg = msg
+    },
+    clearError() {
+      this.showError = false
+      this.errorMsg = ''
+    },
     getGradeText: formatter.getGradeText,
     getTeachersName(teachers) {
       return _.map(teachers, teacher => {
@@ -201,6 +209,7 @@ export default {
       this.loadingSave = false
       this.editedItem = Object.assign({}, this.defaultItem)
       this.editedIndex = -1
+      this.clearError()
     },
     editItem(item) {
       this.editedIndex = this.banjis.indexOf(item)
@@ -222,8 +231,7 @@ export default {
         this.banjis.unshift(banji)
         this.closeDialog()
       } catch (err) {
-        this.errorMsg = err.response.data.errmsg
-        this.showError = true
+        this.showError(err.response.data.errmsg)
       } finally {
         this.loadingSave = false
       }
@@ -237,8 +245,7 @@ export default {
         Object.assign(this.banjis[this.editedIndex], banji)
         this.closeDialog()
       } catch (err) {
-        this.errorMsg = err.response.data.errmsg
-        this.showError = true
+        this.showError(err.response.data.errmsg)
       } finally {
         this.loadingSave = false
       }

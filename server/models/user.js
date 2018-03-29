@@ -88,6 +88,14 @@ var UserSchema = new Schema({
     type: Boolean,
     default: false
   },
+  teacherName: {
+    type: String,
+    default: ''
+  },
+  parentName: {
+    type: String,
+    default: ''
+  },
   teacherBanjis: [{
     type: Schema.Types.ObjectId,
     ref: 'Banji'
@@ -105,6 +113,10 @@ var UserSchema = new Schema({
   },
   additionalProvidersData: {
 
+  },
+  memo: {
+    type: String,
+    default: ''
   },
   created: {
     type: Date,
