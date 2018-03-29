@@ -1,9 +1,10 @@
 <template lang="pug">
-div
-  v-flex(xs12,sm12,md12,lg12,xl12,wrap)
-    template(v-for="photo in photos")
-      p(style="word-break:break-all") {{photo.src}}
-      img(style="width:100%", :src="photo.src")  
+v-container(fluid)
+  v-layout(row,wrap)
+    v-flex(xs12,sm12,md12,lg12,xl12,wrap)
+      template(v-for="photo in photos")
+        p(style="word-break:break-all") {{photo.src}}
+        img(style="width:100%", :src="photo.src")  
 </template>
 
 <script>

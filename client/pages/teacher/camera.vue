@@ -1,11 +1,12 @@
 <template lang="pug">
-div
-  v-flex(v-if="showImgs", xs12,sm12,md12,lg12,xl12,wrap)
-    img(style="width:100%",v-for="img in imgs", :src="img")
-  v-flex(xs12,sm12,md12,lg12,xl12,wrap)
-    p(style="word-break:break-all",v-for="msg in msgs") {{msg}}
-  v-btn(icon,small,color="primary",fab,fixed,bottom,right,@click="paizhao")
-    v-icon photo_camera
+v-container(fluid)
+  v-layout(row,wrap)
+    v-flex(v-if="showImgs", xs12,sm12,md12,lg12,xl12,wrap)
+      img(style="width:100%",v-for="img in imgs", :src="img")
+    v-flex(xs12,sm12,md12,lg12,xl12,wrap)
+      p(style="word-break:break-all",v-for="msg in msgs") {{msg}}
+    v-btn(icon,small,color="primary",fab,fixed,bottom,right,@click="paizhao")
+      v-icon photo_camera
 </template>
 
 <script>

@@ -2,9 +2,9 @@
 v-container(fluid,fill-height,pa-0)
   v-layout(row,wrap,align-center)
     v-flex(xs12,sm12,class="text-xs-center")
-      v-avatar(size="128",style="top:2rem")
+      v-avatar(size="128",style="top:1rem")
         img(:src="$store.state.user.avatar")
-    v-flex(xs12,sm12,mb-2)
+    v-flex(xs12,sm12,mb-5)
       v-list(two-line)
         v-list-tile
           v-list-tile-action

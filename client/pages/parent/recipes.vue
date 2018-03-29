@@ -1,13 +1,12 @@
 <template lang="pug">
-div
-  v-container(fluid,grid-list-lg)
-    v-layout(row,wrap)
-      v-flex(xs12, v-for="recipe in recipes",:key="recipe._id")
-        v-card(color="deep-purple",dark)
-          v-card-title 
-            div(class="headline") {{recipe.date}} {{recipe.day}}
-          v-card-text
-            div(class="title") {{recipe.detail}}
+v-container(fluid,grid-list-lg)
+  v-layout(row,wrap)
+    v-flex(xs12, v-for="recipe in recipes",:key="recipe._id")
+      v-card(color="deep-purple",dark)
+        v-card-title 
+          div(class="headline") {{recipe.date}} {{recipe.day}}
+        v-card-text
+          div(class="title") {{recipe.detail}}
 </template>
 
 <script>

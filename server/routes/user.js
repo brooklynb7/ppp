@@ -29,6 +29,7 @@ export default app => {
   apiRouter.put('/:id/isparent', AuthController.requireAdminAuthApi, UserController.updateUserIsParent)
   apiRouter.put('/:id/isadmin', AuthController.requireAdminAuthApi, UserController.updateUserIsAdmin)
   apiRouter.put('/:id/parentinfo', AuthController.requireAdminAuthApi, UserController.updateParentInfo)
+  apiRouter.put('/:id/teacherinfo', AuthController.requireAdminAuthApi, UserController.updateTeacherInfo)
 
   authRouter.get('/wechat', UserController.signinWechat)
   authRouter.post('/login', UserController.login)

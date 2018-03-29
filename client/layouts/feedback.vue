@@ -5,9 +5,7 @@
       v-spacer
       avatarName
     v-content
-      v-container(fluid,fill-height)
-        v-layout(align-content-start,justify-start)
-          nuxt
+      nuxt
 </template>
 
 <script>

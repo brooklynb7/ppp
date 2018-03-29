@@ -1,9 +1,10 @@
 <template lang="pug">
-div
-  a(:href="link") {{link}}
-  v-flex(xs12,sm12,md12,lg12,xl12,wrap)
-    p(style="word-break:break-all",v-for="msg in msgs") {{msg}}
-  v-btn(color="primary",fab,fixed,bottom,right,@click="saoma") 扫码
+v-container(fluid)
+  v-layout(row,wrap)
+    a(:href="link") {{link}}
+    v-flex(xs12,sm12,md12,lg12,xl12,wrap)
+      p(style="word-break:break-all",v-for="msg in msgs") {{msg}}
+    v-btn(color="primary",fab,fixed,bottom,right,@click="saoma") 扫码
 </template>
 
 <script>

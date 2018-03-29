@@ -1,8 +1,9 @@
 <template lang="pug">
-v-layout
-  v-flex
-    strong(v-html="name")
-    p 我要反馈，建设中
+v-container(fluid)
+  v-layout(align-content-start,justify-start)
+    v-flex
+      strong(v-html="name")
+      p 我要反馈，建设中
 </template>
 
 <script>

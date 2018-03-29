@@ -128,6 +128,12 @@ const updateParentInfo = async (id, { parentName, mobile, memo }) => {
   }, { parentName, mobile, memo })
 }
 
+const updateTeacherInfo = async (id, { teacherName, mobile, memo }) => {
+  return User.findOneAndUpdate({
+    _id: id
+  }, { teacherName, mobile, memo })
+}
+
 export default {
   addUser,
   queryUser,
@@ -143,5 +149,6 @@ export default {
   appendTeacherBanji,
   appendBanjiToTeachers,
   removeBanjiFromTeachers,
-  updateParentInfo
+  updateParentInfo,
+  updateTeacherInfo
 }
