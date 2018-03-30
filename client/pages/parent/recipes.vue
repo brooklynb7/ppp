@@ -1,17 +1,23 @@
 <template lang="pug">
-v-container(fluid,grid-list-lg)
+v-container(fluid,fill-height,pa-0)
   v-layout(row,wrap)
-    v-flex(xs12, v-for="recipe in recipes",:key="recipe._id")
-      v-card(color="deep-purple",dark)
-        v-card-title 
-          div(class="headline") {{recipe.date}} {{recipe.day}}
-        v-card-text
-          div(class="title") {{recipe.detail}}
+    v-flex(xs12)
+      v-card(color="deep-purple elevation-0")
+        v-card-media(src="./static/recipe.jpg",height="160px")
+        v-list(two-line)
+          template(v-for="recipe in recipes")
+            v-list-tile(:key="recipe._id")
+              v-list-tile-action(class="mr-3 mt-1")
+                span(class="deep-purple--text title") {{recipe.day}}
+              v-list-tile-content
+                v-list-tile-sub-title {{recipe.date}}
+                v-list-tile-title(class="mt-1") {{recipe.detail}}
+            v-divider(inset)
 </template>
 
 <script>
 import formatter from '../../utils/formatter'
-import { functionDeclaration } from 'babel-types'
+
 export default {
   data: () => {
     return {

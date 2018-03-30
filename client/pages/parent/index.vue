@@ -75,7 +75,7 @@ export default {
   },
   computed: {},
   methods: {
-    showError(msg) {
+    showErrorMsg(msg) {
       this.showError = true
       this.errorMsg = msg
     },
@@ -97,7 +97,7 @@ export default {
         this.$store.dispatch('updateParentInfo', this.editedItem)
         this.closeDialog()
       } catch (err) {
-        this.showError(err.response.data.errmsg)
+        this.showErrorMsg(err.response.data.errmsg)
       } finally {
         this.loadingSave = false
       }

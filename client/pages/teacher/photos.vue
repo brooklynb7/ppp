@@ -1,5 +1,5 @@
 <template lang="pug">
-v-container(fluid)
+v-container(fluid,pa-2)
   v-layout(row,wrap)
     v-flex(xs12,sm12,md12,lg12,xl12,wrap)
       template(v-for="photo in photos")

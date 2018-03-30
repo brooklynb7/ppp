@@ -1,25 +1,52 @@
 <template lang="pug">
-v-container(fluid)
-  v-layout(row,wrap)
-    v-flex(v-if="showImgs", xs12,sm12,md12,lg12,xl12,wrap)
-      img(style="width:100%",v-for="img in imgs", :src="img")
-    v-flex(xs12,sm12,md12,lg12,xl12,wrap)
-      p(style="word-break:break-all",v-for="msg in msgs") {{msg}}
-    v-btn(icon,small,color="primary",fab,fixed,bottom,right,@click="paizhao")
+div
+  v-container(fluid,mb-5,pa-2)
+    v-layout(row,wrap)
+      v-flex(v-for="(img,idx) in imgs",:key="idx", xs12,sm12,md12,lg12,xl12)
+        v-card(class="mb-3 elevation-8")
+          img(:src="img",width="100%")
+          v-card-actions(class="pt-1")
+            v-spacer
+            v-btn(icon,small,color="pink",flat,@click="removeLocalImg(img)")
+              v-icon remove_circle
+      v-flex(xs12,sm12,md12,lg12,xl12)
+        p(style="word-break:break-all",v-for="msg in msgs") {{msg}}
+  v-footer(fixed,height="auto",style="margin-bottom:44px",v-if="showWarning")
+    v-alert(
+      type="warning",
+      class="ma-0 pa-2",      
+      style="width:100%",
+      dismissible,
+      v-model="showWarning") {{warningMsg}}
+  v-footer(fixed,height="auto",class="pt-1 pb-1")
+    v-btn(icon,color="blue",flat,@click="paizhao",class="ma-0")
       v-icon photo_camera
+    v-text-field(
+      v-model="statusMsg",
+      color="blue",
+      placeholder="动态",
+      hide-details,
+      single-line,
+      class="pa-0",
+      @input="clearWarningMsg()")
+    v-btn(color="blue", @click="send",flat,style="min-width:auto",class="ma-0") 发布
 </template>
 
 <script>
 export default {
-  computed: {
-    showImgs: function() {
-      return !!this.imgs.length
-    }
-  },
   data: () => {
     return {
+      showWarning: false,
+      warningMsg: '',
+      toolbarTitle: '发布动态',
+      localImgLimitation: 4,
+      statusMsg: '',
       msgs: ['Debug messages:'],
-      imgs: [],
+      imgs: [
+        // 'http://n.sinaimg.cn/sports/180/w640h340/20180329/i31B-fyssmmc2793406.jpg',
+        // 'http://n.sinaimg.cn/sports/180/w640h340/20180329/i31B-fyssmmc2793406.jpg',
+        // 'http://n.sinaimg.cn/sports/180/w640h340/20180329/i31B-fyssmmc2793406.jpg'
+      ],
       wxUploadImgIdx: 0,
       wxServerImgIds: []
     }
@@ -34,6 +61,7 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('setTeacherToolbarTitle', this.toolbarTitle)
     const that = this
     const wechatJsConfig = this.$nuxt.$store.state.wechatJsConfig
     wx.config(wechatJsConfig)
@@ -41,10 +69,31 @@ export default {
       that.appendMsg(JSON.stringify(res))
     })
     wx.ready(function() {
-      that.paizhao()
+      // that.paizhao()
     })
   },
   methods: {
+    clearWarningMsg() {
+      this.warningMsg = ''
+      this.showWarning = false
+    },
+    showWarningMsg(msg) {
+      this.warningMsg = msg
+      this.showWarning = true
+    },
+    clearStatusMsg() {
+      this.statusMsg = ''
+    },
+    clearLocalImgs() {
+      this.imgs = []
+    },
+    appendLocalImg(img) {
+      this.imgs.push(img)
+    },
+    removeLocalImg(img) {
+      const index = this.imgs.indexOf(img)
+      this.imgs.splice(index, 1)
+    },
     clearWxUploadImgIdx() {
       this.wxUploadImgIdx = 0
     },
@@ -60,16 +109,36 @@ export default {
     appendMsg(msg) {
       this.msgs.push(msg)
     },
+    exceedLocalImgLimitaion() {
+      return this.imgs.length >= this.localImgLimitation
+    },
+    send() {
+      if (this.imgs.length === 0) {
+        return this.showWarningMsg('请先拍照或选择照片')
+      }
+      if (!this.statusMsg) {
+        return this.showWarningMsg('请填写动态')
+      }
+    },
     paizhao() {
-      this.imgs = []
+      this.clearWarningMsg()
+      if (this.exceedLocalImgLimitaion()) {
+        this.showWarningMsg(`最多发布${this.localImgLimitation}张照片`)
+      }
+      // this.imgs = []
       const that = this
       wx.chooseImage({
         sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
         success: function(res) {
           that.appendMsg(JSON.stringify(res))
           const localIds = res.localIds
-          that.imgs = localIds
-          that.uploadImgs(localIds)
+          localIds.forEach(function(item) {
+            if (!that.exceedLocalImgLimitaion()) {
+              that.appendLocalImg(item)
+            }
+          })
+          // that.imgs = localIds
+          // that.uploadImgs(localIds)
         },
         fail: function(res) {
           that.appendMsg(JSON.stringify(res))
@@ -100,6 +169,8 @@ export default {
             that.retrieveWxServerImgs(that.wxServerImgIds)
             that.clearWxServerImgIds()
             that.clearWxUploadImgIdx()
+            that.clearStatusMsg()
+            that.clearLocalImgs()
           }
         },
         fail: function(res) {

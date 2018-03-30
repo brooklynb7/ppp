@@ -15,7 +15,7 @@
       v-spacer
       strong(v-if="$store.state.isAuthAdmin",v-html="$store.state.admin.name")
     v-content
-      v-container(fluid)
+      v-container(fluid,pa-3)
         nuxt
 </template>
 

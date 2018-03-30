@@ -1,10 +1,16 @@
+'use strict'
+
+const parentToolbarTitle = '我是家长'
+const teacherToolbarTitle = '我是老师'
+
 export const state = () => ({
   user: null,
   isAuthUser: false,
   admin: null,
   isAuthAdmin: false,
   wechatJsConfig: null,
-  parentToolbarTitle: '我是家长'
+  parentToolbarTitle: parentToolbarTitle,
+  teacherToolbarTitle: teacherToolbarTitle
 })
 
 export const mutations = {
@@ -34,7 +40,10 @@ export const mutations = {
     state.wechatJsConfig = config || null
   },
   setParentToolbarTitle (state, title) {
-    state.parentToolbarTitle = title || '我是家长'
+    state.parentToolbarTitle = title || parentToolbarTitle
+  },
+  setTeacherToolbarTitle (state, title) {
+    state.teacherToolbarTitle = title || teacherToolbarTitle
   }
 }
 

@@ -163,7 +163,7 @@ export default {
     this.getTeachers()
   },
   methods: {
-    showError(msg) {
+    showErrorMsg(msg) {
       this.showError = true
       this.errorMsg = msg
     },
@@ -231,7 +231,7 @@ export default {
         this.banjis.unshift(banji)
         this.closeDialog()
       } catch (err) {
-        this.showError(err.response.data.errmsg)
+        this.showErrorMsg(err.response.data.errmsg)
       } finally {
         this.loadingSave = false
       }
@@ -245,7 +245,7 @@ export default {
         Object.assign(this.banjis[this.editedIndex], banji)
         this.closeDialog()
       } catch (err) {
-        this.showError(err.response.data.errmsg)
+        this.showErrorMsg(err.response.data.errmsg)
       } finally {
         this.loadingSave = false
       }

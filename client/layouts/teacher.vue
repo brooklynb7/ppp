@@ -1,7 +1,7 @@
 <template lang="pug">
   v-app
     v-toolbar(app,color="blue darken-2",dark,fixed)
-      v-toolbar-title(@click="navToIndex") 我是老师
+      v-toolbar-title {{$store.state.teacherToolbarTitle}}
       v-spacer
       avatarName
     v-content
@@ -16,11 +16,6 @@ export default {
 
   data: () => ({
     drawer: null
-  }),
-  methods: {
-    navToIndex() {
-      console.log('test')
-    }
-  }
+  })
 }
 </script>

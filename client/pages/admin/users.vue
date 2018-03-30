@@ -5,19 +5,20 @@ div
     v-flex(xs12,sm12,md12,lg12,xl12)
       v-data-table(class="hidden-sm-and-down",:loading="loading",:items="users",class="elevation-1",hide-actions,:headers="headers",:no-data-text="noDataText")
         template(slot="items", slot-scope="props")
-          td 
+          td
             v-tooltip(bottom)
               span(slot="activator") {{ getUsername(props.item) }}
               span {{ props.item.username }}
           td {{ props.item.name }}
-          td {{ props.item.realName }}
           td {{ props.item.mobile }}
-          td
-            v-checkbox(v-model="props.item.isAdmin",color="primary",@click="toggleIsAdmin(props.item)")
+          td {{ props.item.teacherName }}
+          td {{ props.item.parentName }}
           td
             v-checkbox(v-model="props.item.isTeacher",color="primary",@click="toggleIsTeacher(props.item)")
           td
             v-checkbox(v-model="props.item.isParent",color="primary",@click="toggleIsParent(props.item)")
+          td
+            v-checkbox(v-model="props.item.isAdmin",color="primary",@click="toggleIsAdmin(props.item)")
           td {{ getProvider(props.item.provider) }}
           td {{ getRegTime(props.item.created) }}
           td(class="justify-center layout px-0")
@@ -27,21 +28,26 @@ div
               v-icon(color="pink") delete
       v-list(two-line,class="hidden-md-and-up elevation-2")
         template(v-for="(item, index) in users")
-          v-list-tile(:key="item._id",avatar,@click="bottomSheet = !bottomSheet; bottomSheetItem=item",ripple)
-            v-list-tile-avatar
+          v-list-tile(:key="item._id",@click="bottomSheet = !bottomSheet; bottomSheetItem=item",ripple,class="user-item")
+            v-chip(color="primary",class="role-chip",small,outline,disabled) {{ getRoleText(item) }}
+            v-list-tile-avatar(size="32")
               img(:src="item.avatar")
             v-list-tile-content
-              v-list-tile-sub-title(class="body-2") 昵称: {{ item.name }}, 名字: {{ item.realName||'未维护' }}               
-              v-list-tile-sub-title 角色: {{ getRoleText(item) }}
+              v-list-tile-sub-title 微信/昵称: {{ item.name }}
+              v-list-tile-sub-title 名字: {{ getRoleNameText(item) }}
+            v-list-tile-action
+              v-icon(small,class="mt-4") more_vert
           v-divider(v-if="index + 1 < users.length",:key="index")
   v-bottom-sheet(v-model="bottomSheet")    
-    v-list(two-line)
-      v-list-tile(avatar)
+    v-list(three-line)
+      v-list-tile
+        v-chip(color="primary",class="role-chip",small,outline,disabled) {{ getRoleText(bottomSheetItem) }}
         v-list-tile-avatar
           img(:src="bottomSheetItem.avatar")
         v-list-tile-content
-          v-list-tile-sub-title(class="body-2") 昵称: {{ bottomSheetItem.name }}, 名字: {{ bottomSheetItem.realName||'未维护' }}               
-          v-list-tile-sub-title 角色: {{ getRoleText(bottomSheetItem) }}, 来源: {{getProvider(bottomSheetItem.provider)}}
+          v-list-tile-sub-title 微信/昵称: {{ bottomSheetItem.name }}          
+          v-list-tile-sub-title 名字: {{ getRoleNameText(bottomSheetItem) }}
+          v-list-tile-sub-title 来源: {{getProvider(bottomSheetItem.provider)}}
           v-list-tile-sub-title 备注: {{ bottomSheetItem.memo}}
       v-divider
     v-list
@@ -78,16 +84,10 @@ export default {
           value: 'username'
         },
         {
-          text: '昵称',
+          text: '微信/昵称',
           align: 'left',
           sortable: false,
           value: 'name'
-        },
-        {
-          text: '名字',
-          align: 'left',
-          sortable: false,
-          value: 'realName'
         },
         {
           text: '手机',
@@ -97,10 +97,16 @@ export default {
           width: '180px'
         },
         {
-          text: '行政',
-          align: 'center',
+          text: '老师名字',
+          align: 'left',
           sortable: false,
-          width: '5rem'
+          value: 'teacherName'
+        },
+        {
+          text: '家长名字',
+          align: 'left',
+          sortable: false,
+          value: 'parentName'
         },
         {
           text: '老师',
@@ -110,6 +116,12 @@ export default {
         },
         {
           text: '家长',
+          align: 'center',
+          sortable: false,
+          width: '5rem'
+        },
+        {
+          text: '行政',
           align: 'center',
           sortable: false,
           width: '5rem'
@@ -145,6 +157,16 @@ export default {
   methods: {
     getRoleText: formatter.getRoleText,
     getProvider: formatter.getProvider,
+    getRoleNameText(item) {
+      let name = []
+      if (item.teacherName) {
+        name.push(item.teacherName)
+      }
+      if (item.parentName) {
+        name.push(item.parentName)
+      }
+      return name.join(',')
+    },
     getUsername(item) {
       let username = item.username
       if (item.provider === 'wechat') {
@@ -219,3 +241,25 @@ export default {
   }
 }
 </script>
+
+<style>
+.user-item > .list__tile {
+  padding: 0 8px;
+  height: 60px;
+}
+.user-item > .list__tile > .list__tile__avatar {
+  min-width: 42px;
+}
+.role-chip.chip--small {
+  height: 20px;
+  position: absolute;
+  font-size: 12px;
+  right: 0;
+  top: 0;
+  margin-top: 6px;
+  margin-right: 8px;
+}
+.role-chip.chip--small .chip__content {
+  padding: 0 6px;
+}
+</style>

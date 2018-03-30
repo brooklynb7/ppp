@@ -46,11 +46,11 @@ export default {
       url: createWechatOAuthUrl('/teacher')
     },
     teacherCamera: {
-      name: '拍照',
+      name: '发布动态',
       url: createWechatOAuthUrl('/teacher/camera')
     },
     teacherPhotos: {
-      name: '我的相册',
+      name: '我的发布',
       url: createWechatOAuthUrl('/teacher/photos')
     },
     admin: {

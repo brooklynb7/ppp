@@ -138,7 +138,7 @@ export default {
     this.getRecipes()
   },
   methods: {
-    showError(msg) {
+    showErrorMsg(msg) {
       this.showError = true
       this.errorMsg = msg
     },
@@ -198,7 +198,7 @@ export default {
         this.recipes.unshift(recipe)
         this.closeDialog()
       } catch (err) {
-        this.showError(err.response.data.errmsg)
+        this.showErrorMsg(err.response.data.errmsg)
       } finally {
         this.loadingSave = false
       }
@@ -212,7 +212,7 @@ export default {
         Object.assign(this.recipes[this.editedIndex], this.editedItem)
         this.closeDialog()
       } catch (err) {
-        this.showError(err.response.data.errmsg)
+        this.showErrorMsg(err.response.data.errmsg)
       } finally {
         this.loadingSave = false
       }
