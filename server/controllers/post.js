@@ -44,6 +44,18 @@ const addPost = async (ctx) => {
   }
 }
 
+const removePostByUser = async (ctx) => {
+  try {
+    const id = ctx.params.id
+    const rst = await PostService.removePost(id, ctx.state.user._id)
+    ctx.body = rst
+  } catch (err) {
+    console.log(err)
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
 const getMyPosts = async (ctx) => {
   try {
     const posts = await PostService.queryPost({
@@ -101,5 +113,6 @@ export default {
   getMyPosts,
   getTeacherBanjiPosts,
   getParentBanjiPosts,
-  addTestPost
+  addTestPost,
+  removePostByUser
 }

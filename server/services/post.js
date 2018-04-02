@@ -34,7 +34,15 @@ const addPost = async (postData) => {
   return post
 }
 
+const removePost = async (id, user) => {
+  return Post.remove({
+    _id: id,
+    user: user
+  })
+}
+
 export default {
   addPost,
-  queryPost
+  queryPost,
+  removePost
 }

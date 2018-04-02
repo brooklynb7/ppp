@@ -87,6 +87,9 @@ const apiFactory = axios => ({
   },
   getTeacherBanjiPosts () {
     return axios.$get(`/api/posts/teacherbanjis`)
+  },
+  removePost (id) {
+    return axios.$delete(`/api/posts/${id}`)
   }
 })
 

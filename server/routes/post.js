@@ -15,6 +15,7 @@ export default app => {
   apiRouter.get('/parentbanji', AuthController.requireAuthApi, PostController.getParentBanjiPosts)
   apiRouter.get('/teacherbanjis', AuthController.requireAuthApi, PostController.getTeacherBanjiPosts)
   apiRouter.post('/', AuthController.requireAuthApi, PostController.addPost)
+  apiRouter.delete('/:id', AuthController.requireAuthApi, PostController.removePostByUser)
 
   app.use(apiRouter.routes())
 }

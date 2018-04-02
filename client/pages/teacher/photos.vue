@@ -2,8 +2,7 @@
 v-container(fluid,pa-2)
   v-layout(row,wrap)
     v-flex(xs12,sm12,md12,lg12,xl12,wrap)
-      div 最近5条班级动态
-      post(v-for="post in posts",:key="post._id",:post="post")
+      post(v-for="post in posts",:key="post._id",:post="post",editable,@deleted="deletePost")
 </template>
 
 <script>
@@ -22,6 +21,11 @@ export default {
   mounted() {
     this.$store.commit('setTeacherToolbarTitle', this.toolbarTitle)
   },
-  methods: {}
+  methods: {
+    deletePost(post) {
+      const index = this.posts.indexOf(post)
+      this.posts.splice(index, 1)
+    }
+  }
 }
 </script>
