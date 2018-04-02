@@ -29,7 +29,7 @@ div
       v-list(two-line,class="hidden-md-and-up elevation-2")
         template(v-for="(item, index) in users")
           v-list-tile(:key="item._id",@click="bottomSheet = !bottomSheet; bottomSheetItem=item",ripple,class="user-item")
-            v-chip(color="primary",class="role-chip",small,outline,disabled) {{ getRoleText(item) }}
+            v-chip(color="primary",class="user-item-chip",small,outline,disabled) {{ getRoleText(item) }}
             v-list-tile-avatar(size="32")
               img(:src="item.avatar")
             v-list-tile-content
@@ -41,7 +41,7 @@ div
   v-bottom-sheet(v-model="bottomSheet")    
     v-list(three-line)
       v-list-tile
-        v-chip(color="primary",class="role-chip",small,outline,disabled) {{ getRoleText(bottomSheetItem) }}
+        v-chip(color="primary",class="user-item-chip",small,outline,disabled) {{ getRoleText(bottomSheetItem) }}
         v-list-tile-avatar
           img(:src="bottomSheetItem.avatar")
         v-list-tile-content
@@ -241,25 +241,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.user-item > .list__tile {
-  padding: 0 8px;
-  height: 60px;
-}
-.user-item > .list__tile > .list__tile__avatar {
-  min-width: 42px;
-}
-.role-chip.chip--small {
-  height: 20px;
-  position: absolute;
-  font-size: 12px;
-  right: 0;
-  top: 0;
-  margin-top: 6px;
-  margin-right: 8px;
-}
-.role-chip.chip--small .chip__content {
-  padding: 0 6px;
-}
-</style>

@@ -26,7 +26,7 @@ const retrieveWxImgs = async (ctx) => {
     })
 
     try {
-      await Promise.all(_.map(retrievedWxImgsBuffer, async (wxImg, idx) => {
+      const rst = await Promise.all(_.map(retrievedWxImgsBuffer, async (wxImg, idx) => {
         const fileName = `${Date.now()}-${idx}.jpg`
         PhotoService.saveWxImgByBuffer({
           wxImg: wxImg,
@@ -39,11 +39,12 @@ const retrieveWxImgs = async (ctx) => {
           user: ctx.state.user._id
         })
       }))
+      ctx.body = rst
     } catch (err) {
       console.log(err)
+      ctx = 500
+      ctx.body = err
     }
-
-    ctx.body = 'retrieved'
   } catch (err) {
     ctx.throw(500, err)
   }

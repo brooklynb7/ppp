@@ -46,6 +46,9 @@ const apiFactory = axios => ({
   updateTeacherInfo (id, { teacherName, mobile, memo }) {
     return axios.$put(`/api/users/${id}/teacherinfo`, { teacherName, mobile, memo })
   },
+  updateParentBanji (id, banji) {
+    return axios.$put(`/api/users/${id}/parentbanji`, { banji: banji })
+  },
   /* Recipe API */
   addRecipe ({ date, detail, memo }) {
     return axios.$post(`/api/recipes`, { date, detail, memo })
@@ -71,6 +74,16 @@ const apiFactory = axios => ({
   },
   getBanjis () {
     return axios.$get(`/api/banjis`)
+  },
+  /* Post API */
+  addPost ({ status, photos, banji }) {
+    return axios.$post(`/api/posts`, { banji, status, photos: photos.join(',') })
+  },
+  getMyPosts () {
+    return axios.$get(`/api/posts/mine`)
+  },
+  getParentBanjiPosts () {
+    return axios.$get(`/api/posts/parentbanji`)
   }
 })
 

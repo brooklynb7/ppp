@@ -15,12 +15,12 @@ photoModel.init()
 const Photo = mongoose.model('Photo')
 
 const addPhoto = async (photoData) => {
-  console.log(photoData.user)
   const photo = new Photo({
     fileName: photoData.fileName,
     user: photoData.user
   })
-  return photo.save()
+  await photo.save()
+  return photo
 }
 
 const saveWxImgByBuffer = async ({ wxImg, fileName, userId }) => {

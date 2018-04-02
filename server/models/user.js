@@ -174,9 +174,7 @@ UserSchema.statics.findUniqueUsername = async function (username, suffix) {
 
 UserSchema.plugin(deepPopulate, {
   populate: {
-    'parentBanji': {
-      select: 'name'
-    }
+
   }
 })
 

@@ -61,6 +61,10 @@ export default {
       name: '本周食谱',
       url: createWechatOAuthUrl('/parent/recipes')
     },
+    banjiPosts: {
+      name: '班级动态',
+      url: createWechatOAuthUrl('/parent/banjiPosts')
+    },
     parentMe: {
       name: '我的设置',
       url: createWechatOAuthUrl('/parent')

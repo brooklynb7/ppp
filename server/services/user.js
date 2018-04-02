@@ -13,30 +13,31 @@ userModel.init()
 const User = mongoose.model('User')
 
 // User parts
-const queryUser = async ({ query, sort }) => {
+const queryUser = async ({ query, sort, deepPopulate }) => {
   return base.queryEntryList({
     entry: User,
     query: query,
     select: '-salt -password',
+    deepPopulate: deepPopulate || 'parentBanji,teacherBanjis',
     sort: sort
   })
 }
 
 const findOne = async (searchOptions) => {
-  return User.findOne(searchOptions)
+  return User.findOne(searchOptions).select('-salt -password').deepPopulate('parentBanji,teacherBanjis')
 }
 
 const findUserByUid = async (id) => {
   return User.findOne({
     _id: id
-  }, '-salt -password')
+  }).select('-salt -password').deepPopulate('parentBanji,teacherBanjis')
 }
 
 const findLocalUserByUserName = async (username) => {
   return User.findOne({
     username: username,
     provider: 'local'
-  })
+  }).deepPopulate('parentBanji,teacherBanjis')
 }
 
 const findUniqueUsername = async (possibleUsername) => {
@@ -49,13 +50,20 @@ const addUser = async (userOptions) => {
   return createdUser
 }
 
+const updateUserPwd = async () => {
+  const user = await User.findOne({ username: 'test2' })
+  user.password = '123456'
+  return user.save()
+}
+
 // Teacher parts
 const getTeachers = async () => {
-  return base.queryEntryList({
-    entry: User,
-    query: { isTeacher: true },
-    select: '-salt -password',
-    sort: '-created'
+  return queryUser({
+    sort: '-created',
+    deepPopulate: 'teacherBanjis',
+    query: {
+      isTeacher: true
+    }
   })
 }
 
@@ -108,11 +116,12 @@ const removeBanjiFromTeachers = async (userIds, banjiId) => {
 
 // Parent parts
 const getParents = async () => {
-  return base.queryEntryList({
-    entry: User,
-    query: { isParent: true },
-    select: '-salt -password',
-    sort: '-created'
+  return queryUser({
+    sort: '-created',
+    deepPopulate: 'parentBanji',
+    query: {
+      isParent: true
+    }
   })
 }
 
@@ -134,6 +143,14 @@ const updateTeacherInfo = async (id, { teacherName, mobile, memo }) => {
   }, { teacherName, mobile, memo })
 }
 
+const updateParentBanji = async (id, banji) => {
+  await User.findOneAndUpdate({
+    _id: id
+  }, { parentBanji: banji })
+
+  return findUserByUid(id)
+}
+
 export default {
   addUser,
   queryUser,
@@ -150,5 +167,7 @@ export default {
   appendBanjiToTeachers,
   removeBanjiFromTeachers,
   updateParentInfo,
-  updateTeacherInfo
+  updateTeacherInfo,
+  updateParentBanji,
+  updateUserPwd
 }

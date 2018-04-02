@@ -8,17 +8,19 @@ import PhotoService from '../services/photo'
 const addDefaultUser = async (ctx) => {
   // https://vuetifyjs.com/static/doc-images/logo.svg
   try {
-    const user = await UserService.addUser({
-      username: 'test2',
-      password: '123456',
-      gender: 1,
-      avatar: 'https://vuetifyjs.com/static/doc-images/logo.svg',
-      name: 'David Beckham',
-      email: 'test@163.com',
-      provider: 'local'
-    })
+    // const user = await UserService.addUser({
+    //   username: 'test2',
+    //   password: '123456',
+    //   gender: 1,
+    //   avatar: 'https://vuetifyjs.com/static/doc-images/logo.svg',
+    //   name: 'David Beckham',
+    //   email: 'test@163.com',
+    //   provider: 'local'
+    // })
+    const user = await UserService.updateUserPwd()
     ctx.body = user
   } catch (err) {
+    console.log(err)
     ctx.status = 500
     ctx.body = err
   }
@@ -123,6 +125,19 @@ const updateTeacherInfo = async (ctx) => {
     await UserService.updateTeacherInfo(userId, teacherData)
     ctx.body = 'ok'
   } catch (err) {
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
+const updateParentBanji = async (ctx) => {
+  try {
+    const userId = ctx.params.id
+    const banji = ctx.request.body.banji
+    const parent = await UserService.updateParentBanji(userId, banji)
+    ctx.body = parent
+  } catch (err) {
+    console.log(err)
     ctx.status = 500
     ctx.body = err
   }
@@ -245,5 +260,6 @@ export default {
   updateUserIsParent,
   updateUserIsAdmin,
   updateParentInfo,
-  updateTeacherInfo
+  updateTeacherInfo,
+  updateParentBanji
 }

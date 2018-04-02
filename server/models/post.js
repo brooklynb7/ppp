@@ -10,28 +10,25 @@ const deepPopulate = DeepPopulate(mongoose)
 const Schema = mongoose.Schema
 
 /**
- * Banji Schema
+ * Post Schema
  */
-const BanjiSchema = new Schema({
-  year: {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  grade: {
-    type: Number,
-    required: true,
-    default: 1
-  },
-  name: {
+const PostSchem = new Schema({
+  status: {
     type: String,
-    unique: false,
     required: true
   },
-  teachers: [{
+  photos: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Photo'
+  }],
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
-  }],
+  },
+  banji: {
+    type: Schema.Types.ObjectId,
+    ref: 'Banji'
+  },
   memo: {
     type: String,
     default: ''
@@ -42,16 +39,14 @@ const BanjiSchema = new Schema({
   }
 })
 
-BanjiSchema.plugin(deepPopulate, {
+PostSchem.plugin(deepPopulate, {
   populate: {
-    teachers: {
-      select: 'name username realName teacherName parentName'
-    }
+
   }
 })
 
 export default {
   init: () => {
-    mongoose.model('Banji', BanjiSchema)
+    mongoose.model('Post', PostSchem)
   }
 }

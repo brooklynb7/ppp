@@ -5,6 +5,6 @@ nuxt-child
 <script>
 export default {
   layout: 'parent',
-  middleware: 'authUser'
+  middleware: 'authParent'
 }
 </script>

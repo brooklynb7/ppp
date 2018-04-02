@@ -30,13 +30,38 @@ div
       class="pa-0",
       @input="clearWarningMsg()")
     v-btn(color="blue", @click="send",flat,style="min-width:auto",class="ma-0") 发布
+  v-dialog(v-model="sendDialog", max-width="500px",@keydown.esc="sendDialog=false")
+    v-card
+      v-card-title
+       span(class="headline") 发布动态
+      v-card-text
+        v-container(grid-list-md)
+          v-layout(wrap)
+            v-flex(xs12,sm12,md12,lg12,xl12)
+              v-select(
+                v-model="defaultBanji"
+                prepend-icon="class",
+                :items="$store.state.user.teacherBanjis",
+                item-text="name",
+                item-value="_id"
+                label="班级",
+              )            
+      v-card-actions
+        v-spacer
+        v-btn(flat,@click="cancelSend") 取消
+        v-btn(color="primary",flat,@click="doSend",:loading="loadingSend") 发布
+      //- v-card-text(v-if="showError")
+      //-   v-alert(type="error", :value="showError") {{ errorMsg }}
 </template>
 
 <script>
+import * as _ from 'lodash'
 export default {
-  data: () => {
+  data: function() {
     return {
+      sendDialog: false,
       showWarning: false,
+      loadingSend: false,
       warningMsg: '',
       toolbarTitle: '发布动态',
       localImgLimitation: 4,
@@ -48,7 +73,11 @@ export default {
         // 'http://n.sinaimg.cn/sports/180/w640h340/20180329/i31B-fyssmmc2793406.jpg'
       ],
       wxUploadImgIdx: 0,
-      wxServerImgIds: []
+      wxServerImgIds: [],
+      defaultBanji:
+        (this.$store.state.user.teacherBanjis &&
+          this.$store.state.user.teacherBanjis[0]._id) ||
+        ''
     }
   },
   async fetch(context) {
@@ -112,6 +141,9 @@ export default {
     exceedLocalImgLimitaion() {
       return this.imgs.length >= this.localImgLimitation
     },
+    cancelSend() {
+      this.sendDialog = false
+    },
     send() {
       if (this.imgs.length === 0) {
         return this.showWarningMsg('请先拍照或选择照片')
@@ -119,6 +151,11 @@ export default {
       if (!this.statusMsg) {
         return this.showWarningMsg('请填写动态')
       }
+      this.sendDialog = true
+    },
+    doSend() {
+      this.loadingSend = true
+      this.uploadImgs(this.imgs)
     },
     paizhao() {
       this.clearWarningMsg()
@@ -152,7 +189,7 @@ export default {
       wx.uploadImage({
         localId: imgs[this.wxUploadImgIdx], // 需要上传的图片的本地ID，由chooseImage接口获得
         isShowProgressTips: 1, // 默认为1，显示进度提示
-        success: function(res) {
+        success: async function(res) {
           var serverId = res.serverId // 返回图片的服务器端ID
           that.incrementWxUploadImgIdx()
           that.appendWxServerImgId(serverId)
@@ -166,7 +203,7 @@ export default {
             that.appendMsg(
               `Finish uploading ${imgs.length} images to wx server`
             )
-            that.retrieveWxServerImgs(that.wxServerImgIds)
+            await that.retrieveWxServerImgs(that.wxServerImgIds)
             that.clearWxServerImgIds()
             that.clearWxUploadImgIdx()
             that.clearStatusMsg()
@@ -185,10 +222,19 @@ export default {
       this.appendMsg(`Retrieving wxImgs ${wxServerImgs.join(',')}`)
 
       try {
-        await this.$api.retrieveWxImgs(wxServerImgs)
+        const photos = await this.$api.retrieveWxImgs(wxServerImgs)
         this.appendMsg(`Retrieved wxImgs`)
+        await this.$api.addPost({
+          status: this.statusMsg,
+          photos: _.map(photos, '_id'),
+          banji: this.defaultBanji
+        })
+        this.appendMsg(`Post added`)
       } catch (err) {
         this.appendMsg(`Retrieve wxImgs error ${JSON.stringify(err)}`)
+      } finally {
+        this.loadingSend = false
+        this.sendDialog = false
       }
     }
   }
