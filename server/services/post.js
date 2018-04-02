@@ -18,7 +18,7 @@ const queryPost = async ({ page, pageSize, query, sort }) => {
     page: page,
     pageSize: pageSize,
     sort: sort || '-createTime',
-    deepPopulate: 'photos,banji'
+    deepPopulate: 'photos,banji,user'
   })
 }
 

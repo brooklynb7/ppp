@@ -41,7 +41,7 @@ const PostSchem = new Schema({
 
 PostSchem.plugin(deepPopulate, {
   populate: {
-
+    user: 'name username realName teacherName parentName'
   }
 })
 

@@ -137,6 +137,10 @@ const createMenu = async (ctx) => {
         'url': menuButton.teacherMe.url
       }, {
         'type': 'view',
+        'name': menuButton.teacherBanjiPosts.name,
+        'url': menuButton.teacherBanjiPosts.url
+      }, {
+        'type': 'view',
         'name': menuButton.teacherPhotos.name,
         'url': menuButton.teacherPhotos.url
       }, {

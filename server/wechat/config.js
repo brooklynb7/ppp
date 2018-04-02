@@ -53,6 +53,10 @@ export default {
       name: '我的发布',
       url: createWechatOAuthUrl('/teacher/photos')
     },
+    teacherBanjiPosts: {
+      name: '班级动态',
+      url: createWechatOAuthUrl('/teacher/banjiPosts')
+    },
     admin: {
       name: '行政管理',
       url: createWechatOAuthUrl('/admin')

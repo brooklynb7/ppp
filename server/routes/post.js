@@ -10,8 +10,10 @@ const apiRouter = new Router({
 })
 
 export default app => {
+  apiRouter.get('/test/add', AuthController.requireAdminAuthApi, PostController.addTestPost)
   apiRouter.get('/mine', AuthController.requireAuthApi, PostController.getMyPosts)
   apiRouter.get('/parentbanji', AuthController.requireAuthApi, PostController.getParentBanjiPosts)
+  apiRouter.get('/teacherbanjis', AuthController.requireAuthApi, PostController.getTeacherBanjiPosts)
   apiRouter.post('/', AuthController.requireAuthApi, PostController.addPost)
 
   app.use(apiRouter.routes())

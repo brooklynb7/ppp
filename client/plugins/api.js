@@ -84,6 +84,9 @@ const apiFactory = axios => ({
   },
   getParentBanjiPosts () {
     return axios.$get(`/api/posts/parentbanji`)
+  },
+  getTeacherBanjiPosts () {
+    return axios.$get(`/api/posts/teacherbanjis`)
   }
 })
 

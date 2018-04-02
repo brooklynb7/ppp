@@ -1,10 +1,29 @@
 'use strict'
 
 import PostService from '../services/post'
+import * as _ from 'lodash'
 
 /*
  * API Controller
  */
+
+const addTestPost = async (ctx) => {
+  try {
+    const postData = {
+      status: 'test',
+      banji: '5ab9f0b6f864c86354c8ca9c',
+      user: '5ab0b80deae6122afe72dcdb',
+      photos: []
+    }
+
+    const post = await PostService.addPost(postData)
+    ctx.body = post
+  } catch (err) {
+    console.log(err)
+    ctx.status = 500
+    ctx.body = err
+  }
+}
 
 const addPost = async (ctx) => {
   try {
@@ -57,8 +76,30 @@ const getParentBanjiPosts = async (ctx) => {
   }
 }
 
+const getTeacherBanjiPosts = async (ctx) => {
+  try {
+    const banjis = _.map(ctx.state.user.teacherBanjis, '_id')
+    const posts = await PostService.queryPost({
+      query: {
+        banji: {
+          $in: banjis
+        }
+      },
+      page: 0,
+      pageSize: 5
+    })
+    ctx.body = posts
+  } catch (err) {
+    console.log(err)
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
 export default {
   addPost,
   getMyPosts,
-  getParentBanjiPosts
+  getTeacherBanjiPosts,
+  getParentBanjiPosts,
+  addTestPost
 }
