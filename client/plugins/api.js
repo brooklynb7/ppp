@@ -49,6 +49,9 @@ const apiFactory = axios => ({
   updateParentBanji (id, banji) {
     return axios.$put(`/api/users/${id}/parentbanji`, { banji: banji })
   },
+  removeUser (id) {
+    return axios.$delete(`/api/users/${id}`)
+  },
   /* Recipe API */
   addRecipe ({ date, detail, memo }) {
     return axios.$post(`/api/recipes`, { date, detail, memo })

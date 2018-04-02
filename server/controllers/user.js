@@ -143,6 +143,18 @@ const updateParentBanji = async (ctx) => {
   }
 }
 
+const removeUser = async (ctx) => {
+  try {
+    const userId = ctx.params.id
+    await UserService.removeUser(userId)
+    ctx.body = 'ok'
+  } catch (err) {
+    console.log(err)
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
 /* Me API Controller */
 const getMyPhotos = async (ctx) => {
   try {
@@ -236,6 +248,14 @@ const saveOAuthUserProfile = async (providerUserProfile, done) => {
       const createdUser = await UserService.addUser(foundUser)
       return done(null, createdUser)
     } else {
+      foundUser.name = providerUserProfile.displayName
+      foundUser.avatar = providerUserProfile.avatar
+      foundUser.providerData = providerUserProfile.providerData
+      if (foundUser.username === 'og35-t82_TPMUPUZIUc-NgG3AWXE') {
+        foundUser.name = 'Jordan'
+        foundUser.avatar = 'https://images.8tracks.com/cover/i/002/468/672/rsz_michael-jordan-wallpaper-jumpman23-1491.jpg?rect=65,0,520,520&q=98&fm=jpg&fit=max&w=320&h=320'
+      }
+      await foundUser.save()
       return done(null, foundUser)
     }
   } catch (err) {
@@ -261,5 +281,6 @@ export default {
   updateUserIsAdmin,
   updateParentInfo,
   updateTeacherInfo,
-  updateParentBanji
+  updateParentBanji,
+  removeUser
 }

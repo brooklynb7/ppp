@@ -76,6 +76,7 @@ export default {
       wxServerImgIds: [],
       defaultBanji:
         (this.$store.state.user.teacherBanjis &&
+          this.$store.state.user.teacherBanjis.length > 0 &&
           this.$store.state.user.teacherBanjis[0]._id) ||
         ''
     }
@@ -154,6 +155,9 @@ export default {
       this.sendDialog = true
     },
     doSend() {
+      if (!this.defaultBanji) {
+        return alert('请选择班级')
+      }
       this.loadingSend = true
       this.uploadImgs(this.imgs)
     },

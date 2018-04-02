@@ -24,7 +24,7 @@ div
           td(class="justify-center layout px-0")
             v-btn(icon,class="mx-0",disabled,@click="editItem(props.item)")
               v-icon(color="teal") edit
-            v-btn(icon,class="mx-0",disabled,@click="deleteItem(props.item)")
+            v-btn(icon,class="mx-0",@click="deleteUser(props.item)")
               v-icon(color="pink") delete
       v-list(two-line,class="hidden-md-and-up elevation-2")
         template(v-for="(item, index) in users")
@@ -60,6 +60,9 @@ div
       v-list-tile
         v-flex(xs3,offset-xs9)
           v-switch(label="家长",color="primary",hide-details,v-model="bottomSheetItem.isParent",,@click="toggleIsParent(bottomSheetItem)")
+      v-list-tile
+        v-flex(xs12)
+          v-btn(block,outline,color="error",@click="deleteUser(bottomSheetItem)",:loading="loadingRemove") 删除用户
 </template>
 
 <script>
@@ -71,6 +74,7 @@ export default {
   components: { listHeader },
   data: () => {
     return {
+      loadingRemove: false,
       bottomSheetItem: {},
       bottomSheet: false,
       dialog: false,
@@ -225,6 +229,25 @@ export default {
         alert(err)
       } finally {
         this.loading = false
+      }
+    },
+    deleteUser(user) {
+      confirm(`您确定要删除用户 ${user.name} 吗?`) && this.removeUser(user)
+    },
+    async removeUser(user) {
+      this.loadingRemove = true
+      try {
+        await this.$api.removeUser(user._id)
+        this.loadingRemove = false
+        const idx = this.users.indexOf(user)
+        const index = this.users.indexOf(user)
+        this.users.splice(index, 1)
+        this.bottomSheet = false
+        this.bottomSheetItem = {}
+      } catch (err) {
+        alert(err.response.data.errmsg)
+      } finally {
+        this.loadingRemove = false
       }
     },
     editItem(item) {

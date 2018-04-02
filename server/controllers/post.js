@@ -75,7 +75,7 @@ const getParentBanjiPosts = async (ctx) => {
   try {
     const posts = await PostService.queryPost({
       query: {
-        banji: ctx.state.user.parentBanji ? ctx.state.user.parentBanji._id : ''
+        banji: ctx.state.user.parentBanji ? ctx.state.user.parentBanji._id : null
       },
       page: 0,
       pageSize: 5

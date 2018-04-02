@@ -151,6 +151,12 @@ const updateParentBanji = async (id, banji) => {
   return findUserByUid(id)
 }
 
+const removeUser = async (id) => {
+  return User.remove({
+    _id: id
+  })
+}
+
 export default {
   addUser,
   queryUser,
@@ -169,5 +175,6 @@ export default {
   updateParentInfo,
   updateTeacherInfo,
   updateParentBanji,
-  updateUserPwd
+  updateUserPwd,
+  removeUser
 }
