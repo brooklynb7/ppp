@@ -93,6 +93,12 @@ const apiFactory = axios => ({
   },
   removePost (id) {
     return axios.$delete(`/api/posts/${id}`)
+  },
+  addZanForPost (id) {
+    return axios.$post(`/api/posts/${id}/zan`)
+  },
+  removeZanForPost (id) {
+    return axios.$delete(`/api/posts/${id}/zan`)
   }
 })
 

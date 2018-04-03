@@ -108,11 +108,39 @@ const getTeacherBanjiPosts = async (ctx) => {
   }
 }
 
+const addZan = async (ctx) => {
+  try {
+    const userId = ctx.state.user._id
+    const postId = ctx.params.id
+    await PostService.addZan(postId, userId)
+    ctx.body = 'ok'
+  } catch (err) {
+    console.log(err)
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
+const removeZan = async (ctx) => {
+  try {
+    const userId = ctx.state.user._id
+    const postId = ctx.params.id
+    await PostService.removeZan(postId, userId)
+    ctx.body = 'ok'
+  } catch (err) {
+    console.log(err)
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
 export default {
   addPost,
   getMyPosts,
   getTeacherBanjiPosts,
   getParentBanjiPosts,
   addTestPost,
-  removePostByUser
+  removePostByUser,
+  addZan,
+  removeZan
 }

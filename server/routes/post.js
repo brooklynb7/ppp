@@ -16,6 +16,8 @@ export default app => {
   apiRouter.get('/teacherbanjis', AuthController.requireAuthApi, PostController.getTeacherBanjiPosts)
   apiRouter.post('/', AuthController.requireAuthApi, PostController.addPost)
   apiRouter.delete('/:id', AuthController.requireAuthApi, PostController.removePostByUser)
+  apiRouter.post('/:id/zan', AuthController.requireAuthApi, PostController.addZan)
+  apiRouter.delete('/:id/zan', AuthController.requireAuthApi, PostController.removeZan)
 
   app.use(apiRouter.routes())
 }

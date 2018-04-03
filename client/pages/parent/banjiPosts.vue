@@ -2,8 +2,16 @@
 v-container(fluid,pa-2)
   v-layout(row,wrap)
     v-flex(xs12,sm12,md12,lg12,xl12,wrap)
+      div(style="text-align:center")
+        v-progress-circular(v-if="loading",indeterminate,color="deep-purple",size="24")
       div 最近5条动态
-      post(v-for="post in posts",:key="post._id",:post="post")
+      post(
+        v-for="post in posts",
+        :key="post._id",
+        :post="post",
+        enableZan)
+  v-btn(icon,fab,color="deep-purple",dark,fixed,bottom,right,small,@click="loadPosts()")
+    v-icon refresh
 </template>
 
 <script>
@@ -13,18 +21,29 @@ export default {
   components: { post },
   data: function() {
     return {
+      posts: [],
+      loading: true,
       toolbarTitle: this.$store.state.user.parentBanji
         ? this.$store.state.user.parentBanji.name
         : ''
     }
   },
-  async asyncData({ app }) {
-    let posts = await app.$api.getParentBanjiPosts()
-    return { posts: posts.results }
-  },
-  mounted() {
+  async mounted() {
+    this.loadPosts()
     this.$store.commit('setParentToolbarTitle', this.toolbarTitle)
   },
-  methods: {}
+  methods: {
+    async loadPosts() {
+      this.loading = true
+      try {
+        let posts = await this.$api.getParentBanjiPosts()
+        this.posts = posts.results
+      } catch (err) {
+        alert(err)
+      } finally {
+        this.loading = false
+      }
+    }
+  }
 }
 </script>

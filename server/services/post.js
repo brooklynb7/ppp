@@ -41,8 +41,30 @@ const removePost = async (id, user) => {
   })
 }
 
+const addZan = async (id, userId) => {
+  return Post.update({
+    _id: id,
+    zan: {
+      $ne: userId
+    }
+  }, {
+    $push: { zan: userId }
+  })
+}
+
+const removeZan = async (id, userId) => {
+  return Post.update({
+    _id: id,
+    zan: userId
+  }, {
+    $pull: { zan: userId }
+  })
+}
+
 export default {
   addPost,
   queryPost,
-  removePost
+  removePost,
+  addZan,
+  removeZan
 }

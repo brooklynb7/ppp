@@ -29,6 +29,10 @@ const PostSchem = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Banji'
   },
+  zan: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   memo: {
     type: String,
     default: ''

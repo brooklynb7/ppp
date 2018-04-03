@@ -8,7 +8,11 @@ v-card(class="mb-2 elevation-2")
     template(v-for="photo in post.photos")
       div
         img(style="width:100%", :src="getPhotoSrc(photo)")
-  v-card-actions(v-if="editable",class="pt-0")
+  v-card-actions(v-if="enableZan",class="pt-0")    
+    v-spacer
+    v-btn(flat,icon,color="pink",@click="zan(post)")
+      v-icon {{ getFavoriteIcon(post) }}
+  v-card-actions(v-if="editable",class="pt-0")    
     v-spacer
     v-btn(flat,icon,color="pink",@click="deletePost(post)",:loading="loadingDelete")
       v-icon remove_circle
@@ -29,6 +33,10 @@ export default {
     editable: {
       type: Boolean,
       defautl: false
+    },
+    enableZan: {
+      type: Boolean,
+      defautl: false
     }
   },
   methods: {
@@ -41,6 +49,22 @@ export default {
     deletePost(post) {
       confirm(`您确定要删除 "${post.status}" 的动态吗?`) &&
         this.removePost(post)
+    },
+    isZaned(post) {
+      return _.includes(post.zan, this.$store.state.user._id)
+    },
+    async zan(post) {
+      if (this.isZaned(post)) {
+        const idx = post.zan.indexOf(this.$store.state.user._id)
+        post.zan.splice(idx, 1)
+        await this.$api.removeZanForPost(post._id)
+      } else {
+        post.zan.push(this.$store.state.user._id)
+        await this.$api.addZanForPost(post._id)
+      }
+    },
+    getFavoriteIcon(post) {
+      return this.isZaned(post) ? 'favorite' : 'favorite_border'
     },
     async removePost(post) {
       this.loadingDelete = true
