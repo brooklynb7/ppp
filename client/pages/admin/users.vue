@@ -29,7 +29,7 @@ div
       v-list(two-line,class="hidden-md-and-up elevation-2")
         template(v-for="(item, index) in users")
           v-list-tile(:key="item._id",@click="bottomSheet = !bottomSheet; bottomSheetItem=item",ripple,class="user-item")
-            v-chip(color="primary",class="user-item-chip",small,outline,disabled) {{ getRoleText(item) }}
+            roleChip(:item="item")
             v-list-tile-avatar(size="32")
               img(:src="item.avatar")
             v-list-tile-content
@@ -41,7 +41,7 @@ div
   v-bottom-sheet(v-model="bottomSheet")    
     v-list(three-line)
       v-list-tile
-        v-chip(color="primary",class="user-item-chip",small,outline,disabled) {{ getRoleText(bottomSheetItem) }}
+        roleChip(:item="bottomSheetItem")        
         v-list-tile-avatar
           img(:src="bottomSheetItem.avatar")
         v-list-tile-content
@@ -69,9 +69,10 @@ div
 import formatter from '../../utils/formatter'
 import moment from 'moment'
 import listHeader from '../../components/listHeader'
+import roleChip from '../../components/roleChip'
 
 export default {
-  components: { listHeader },
+  components: { listHeader, roleChip },
   data: () => {
     return {
       loadingRemove: false,
@@ -159,7 +160,6 @@ export default {
     this.getUsers()
   },
   methods: {
-    getRoleText: formatter.getRoleText,
     getProvider: formatter.getProvider,
     getRoleNameText(item) {
       let name = []
@@ -255,7 +255,6 @@ export default {
       // this.editedItem = Object.assign({}, item)
       // this.dialog = true
     },
-
     deleteItem(item) {
       // const index = this.items.indexOf(item)
       // confirm('Are you sure you want to delete this item?') &&

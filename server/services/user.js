@@ -7,6 +7,7 @@ import mongoose from 'mongoose'
 import userModel from '../models/user'
 import base from './base'
 import * as _ from 'lodash'
+import BanjiService from './banji'
 
 userModel.init()
 
@@ -54,6 +55,12 @@ const updateUserPwd = async () => {
   const user = await User.findOne({ username: 'test2' })
   user.password = '123456'
   return user.save()
+}
+
+const removeUser = async (id) => {
+  return User.remove({
+    _id: id
+  })
 }
 
 // Teacher parts
@@ -114,6 +121,38 @@ const removeBanjiFromTeachers = async (userIds, banjiId) => {
   }, { multi: true })
 }
 
+const updateTeacherBanjis = async (id, { teacherBanjis }) => {
+  const teacher = await User.findOne({
+    _id: id,
+    isTeacher: true
+  })
+  if (teacher) {
+    // Hanlde banjis add and remove
+    const originalTeacherBanjiIds = _.map(teacher.teacherBanjis, (item) => { return item.toString() })
+    const intersections = _.intersection(teacherBanjis, originalTeacherBanjiIds)
+    const newlyAdded = _.difference(teacherBanjis, intersections)
+    const removed = _.difference(originalTeacherBanjiIds, intersections)
+
+    await Promise.all([
+      BanjiService.appendTeacherToBanjis(newlyAdded, teacher._id),
+      BanjiService.removeTeacherFromBanjis(removed, teacher._id)]
+    )
+
+    await teacher.update({
+      teacherBanjis: teacherBanjis || []
+    })
+    return findUserByUid(teacher._id)
+  } else {
+    return teacher
+  }
+}
+
+const updateTeacherInfo = async (id, { teacherName, mobile, memo }) => {
+  return User.findOneAndUpdate({
+    _id: id
+  }, { teacherName, mobile, memo })
+}
+
 // Parent parts
 const getParents = async () => {
   return queryUser({
@@ -137,24 +176,12 @@ const updateParentInfo = async (id, { parentName, mobile, memo }) => {
   }, { parentName, mobile, memo })
 }
 
-const updateTeacherInfo = async (id, { teacherName, mobile, memo }) => {
-  return User.findOneAndUpdate({
-    _id: id
-  }, { teacherName, mobile, memo })
-}
-
 const updateParentBanji = async (id, banji) => {
   await User.findOneAndUpdate({
     _id: id
   }, { parentBanji: banji })
 
   return findUserByUid(id)
-}
-
-const removeUser = async (id) => {
-  return User.remove({
-    _id: id
-  })
 }
 
 export default {
@@ -176,5 +203,6 @@ export default {
   updateTeacherInfo,
   updateParentBanji,
   updateUserPwd,
-  removeUser
+  removeUser,
+  updateTeacherBanjis
 }

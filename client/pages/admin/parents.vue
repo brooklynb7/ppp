@@ -19,7 +19,7 @@ div
       v-list(two-line,class="hidden-md-and-up elevation-2")
         template(v-for="(item, index) in parents")
           v-list-tile(:key="item._id",@click="openBottomSheet(item)",ripple,class="user-item")
-            v-chip(color="primary",class="user-item-chip",small,outline,disabled) {{ getBanjiText(item) }}
+            userItemChip(:text="getBanjiText(item)")
             v-list-tile-avatar(size="32")
               img(:src="item.avatar")
             v-list-tile-content
@@ -28,10 +28,10 @@ div
             v-list-tile-action
               v-icon(small,class="mt-4") more_vert
           v-divider(v-if="index + 1 < parents.length",:key="index")
-  v-bottom-sheet(v-model="bottomSheet")    
+  v-bottom-sheet(v-model="bottomSheet")
     v-list(three-line)
       v-list-tile
-        v-chip(color="primary",class="user-item-chip",small,outline,disabled) {{getBanjiText(bottomSheetItem)}}
+        userItemChip(:text="getBanjiText(bottomSheetItem)")
         v-list-tile-avatar
           img(:src="bottomSheetItem.avatar")
         v-list-tile-content
@@ -48,14 +48,17 @@ div
           hide-details,
           v-model="bottomSheetItem.parentBanjiId"
           @change="updateParentBanji",
+          segmented,
           :loading="loadingUpdate")
 </template>
 
 <script>
 import formatter from '../../utils/formatter'
 import moment from 'moment'
+import userItemChip from '../../components/userItemChip'
 
 export default {
+  components: { userItemChip },
   data: () => {
     return {
       loadingUpdate: false,
@@ -130,7 +133,6 @@ export default {
       )
     },
     async getBanjis() {
-      this.loading = true
       try {
         const banjis = await this.$api.getBanjis()
         this.banjis = banjis.results
@@ -141,8 +143,6 @@ export default {
         })
       } catch (err) {
         alert(err)
-      } finally {
-        this.loading = false
       }
     },
     async getParents() {

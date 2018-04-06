@@ -42,33 +42,59 @@ const addBanji = async (banjiData) => {
 
 const updateBanji = async (id, { name, teachers, year, grade, memo }) => {
   const banji = await Banji.findById(id)
+  if (banji) {
+    // Hanlde teachers add and remove
+    const originalTeacherIds = _.map(banji.teachers, (item) => { return item.toString() })
+    const intersections = _.intersection(teachers, originalTeacherIds)
+    const newlyAdded = _.difference(teachers, intersections)
+    const removed = _.difference(originalTeacherIds, intersections)
 
-  // Hanlde teachers add and remove
-  const originalTeacherIds = _.map(banji.teachers, (item) => { return item.toString() })
-  const intersections = _.intersection(teachers, originalTeacherIds)
-  const newlyAdded = _.difference(teachers, intersections)
-  const removed = _.difference(originalTeacherIds, intersections)
-  console.log(intersections)
-  console.log(newlyAdded)
-  console.log(removed)
+    await Promise.all([
+      UserService.appendBanjiToTeachers(newlyAdded, banji._id),
+      UserService.removeBanjiFromTeachers(removed, banji._id)]
+    )
 
-  await Promise.all([
-    UserService.appendBanjiToTeachers(newlyAdded, banji._id),
-    UserService.removeBanjiFromTeachers(removed, banji._id)]
-  )
+    await banji.update({
+      name: name,
+      teachers: teachers || [],
+      grade: parseInt(grade, 10),
+      year: parseInt(year, 10),
+      memo: memo
+    })
+    return findBanjiById(banji._id)
+  } else {
+    return banji
+  }
+}
 
-  await banji.update({
-    name: name,
-    teachers: teachers || [],
-    grade: parseInt(grade, 10),
-    year: parseInt(year, 10),
-    memo: memo
-  })
-  return findBanjiById(banji._id)
+const appendTeacherToBanjis = async (banjiIds, userId) => {
+  return Banji.update({
+    _id: {
+      $in: banjiIds
+    },
+    teachers: {
+      $ne: userId
+    }
+  }, {
+    $push: { teachers: userId }
+  }, { multi: true })
+}
+
+const removeTeacherFromBanjis = async (banjiIds, userId) => {
+  return Banji.update({
+    _id: {
+      $in: banjiIds
+    },
+    teachers: userId
+  }, {
+    $pull: { teachers: userId }
+  }, { multi: true })
 }
 
 export default {
   addBanji,
   queryBanji,
-  updateBanji
+  updateBanji,
+  appendTeacherToBanjis,
+  removeTeacherFromBanjis
 }

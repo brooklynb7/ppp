@@ -22,6 +22,13 @@ v-container(fluid,fill-height,pa-0)
         v-divider(inset)
         v-list-tile
           v-list-tile-action
+            v-icon(color="blue") class
+          v-list-tile-content
+            v-list-tile-sub-title 我的班级
+            v-list-tile-title(class="mt-1") {{getBanjisText()}}
+        v-divider(inset)
+        v-list-tile
+          v-list-tile-action
             v-icon(color="blue") phone
           v-list-tile-content
             v-list-tile-sub-title 手机
@@ -57,6 +64,7 @@ v-container(fluid,fill-height,pa-0)
 </template>
 
 <script>
+import formatter from '../../utils/formatter'
 export default {
   data: function() {
     return {
@@ -89,6 +97,18 @@ export default {
     },
     closeDialog() {
       this.dialog = false
+    },
+    getBanjisText() {
+      let text = '-'
+      if (
+        this.$store.state.user.teacherBanjis &&
+        this.$store.state.user.teacherBanjis.length > 0
+      ) {
+        text = formatter.getTeacherBanjisText(
+          this.$store.state.user.teacherBanjis
+        )
+      }
+      return text
     },
     async save() {
       try {

@@ -49,6 +49,9 @@ const apiFactory = axios => ({
   updateParentBanji (id, banji) {
     return axios.$put(`/api/users/${id}/parentbanji`, { banji: banji })
   },
+  updateTeacherBanjis (id, banjis) {
+    return axios.$put(`/api/users/${id}/teacherbanjis`, { banjis: banjis })
+  },
   removeUser (id) {
     return axios.$delete(`/api/users/${id}`)
   },
@@ -82,8 +85,8 @@ const apiFactory = axios => ({
   addPost ({ status, photos, banji }) {
     return axios.$post(`/api/posts`, { banji, status, photos: photos.join(',') })
   },
-  getMyPosts () {
-    return axios.$get(`/api/posts/mine`)
+  getMyPosts (page, pageSize) {
+    return axios.$get(`/api/posts/mine?page=${page}&pageSize=${pageSize}`)
   },
   getParentBanjiPosts () {
     return axios.$get(`/api/posts/parentbanji`)

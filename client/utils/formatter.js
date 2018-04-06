@@ -64,11 +64,16 @@ const getRoleText = (item) => {
   return text.join(',')
 }
 
+const getTeacherBanjisText = (banjis) => {
+  return _.map(banjis, 'name').join(',')
+}
+
 export default {
   getProvider,
   getWholeWeekdays,
   getWeekdayText,
   getGradeList,
   getGradeText,
-  getRoleText
+  getRoleText,
+  getTeacherBanjisText
 }

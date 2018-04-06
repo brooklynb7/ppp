@@ -9,15 +9,24 @@ import * as _ from 'lodash'
 
 const addTestPost = async (ctx) => {
   try {
-    const postData = {
-      status: 'test',
-      banji: '5ab9f0b6f864c86354c8ca9c',
-      user: '5ab0b80deae6122afe72dcdb',
-      photos: []
+    // const postData = {
+    //   status: 'test',
+    //   banji: '5ab9f0b6f864c86354c8ca9c',
+    //   user: '5ab0b80deae6122afe72dcdb',
+    //   photos: []
+    // }
+
+    for (let i = 1; i <= 5; i++) {
+      await PostService.addPost({
+        status: 'test' + i,
+        banji: '5ab9f0b6f864c86354c8ca9c',
+        user: '5ab4bc7b9d9cbdbeac5d22e2',
+        photos: []
+      })
     }
 
-    const post = await PostService.addPost(postData)
-    ctx.body = post
+    // const post = await PostService.addPost(postData)
+    ctx.body = 'ok'
   } catch (err) {
     console.log(err)
     ctx.status = 500
@@ -58,10 +67,14 @@ const removePostByUser = async (ctx) => {
 
 const getMyPosts = async (ctx) => {
   try {
+    const page = ctx.query.page
+    const pageSize = ctx.query.pageSize
     const posts = await PostService.queryPost({
       query: {
         user: ctx.state.user._id
-      }
+      },
+      page: page,
+      pageSize: pageSize
     })
     ctx.body = posts
   } catch (err) {

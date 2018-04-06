@@ -28,9 +28,10 @@ export default app => {
   apiRouter.put('/:id/isteacher', AuthController.requireAdminAuthApi, UserController.updateUserIsTeacher)
   apiRouter.put('/:id/isparent', AuthController.requireAdminAuthApi, UserController.updateUserIsParent)
   apiRouter.put('/:id/isadmin', AuthController.requireAdminAuthApi, UserController.updateUserIsAdmin)
-  apiRouter.put('/:id/parentinfo', AuthController.requireAdminAuthApi, UserController.updateParentInfo)
-  apiRouter.put('/:id/teacherinfo', AuthController.requireAdminAuthApi, UserController.updateTeacherInfo)
+  apiRouter.put('/:id/parentinfo', AuthController.requireAuthApi, UserController.updateParentInfo)
+  apiRouter.put('/:id/teacherinfo', AuthController.requireAuthApi, UserController.updateTeacherInfo)
   apiRouter.put('/:id/parentbanji', AuthController.requireAdminAuthApi, UserController.updateParentBanji)
+  apiRouter.put('/:id/teacherbanjis', AuthController.requireAdminAuthApi, UserController.updateTeacherBanjis)
   apiRouter.delete('/:id', AuthController.requireAdminAuthApi, UserController.removeUser)
 
   authRouter.get('/wechat', UserController.signinWechat)

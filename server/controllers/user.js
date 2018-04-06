@@ -130,6 +130,18 @@ const updateTeacherInfo = async (ctx) => {
   }
 }
 
+const updateTeacherBanjis = async (ctx) => {
+  try {
+    const teacherBanjis = ctx.request.body.banjis
+    const rst = await UserService.updateTeacherBanjis(ctx.params.id, { teacherBanjis })
+    ctx.body = rst
+  } catch (err) {
+    console.log(err)
+    ctx.status = 500
+    ctx.body = err
+  }
+}
+
 const updateParentBanji = async (ctx) => {
   try {
     const userId = ctx.params.id
@@ -281,6 +293,7 @@ export default {
   updateUserIsAdmin,
   updateParentInfo,
   updateTeacherInfo,
+  updateTeacherBanjis,
   updateParentBanji,
   removeUser
 }

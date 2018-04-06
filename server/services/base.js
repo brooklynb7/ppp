@@ -7,8 +7,8 @@
 const queryEntryList = async (options) => {
   const queryObj = options.query || {}
   const Entry = options.entry
-  const page = options.page || 0
-  const pageSize = options.pageSize || 0
+  const page = parseInt(options.page, 10) || 0
+  const pageSize = parseInt(options.pageSize, 10) || 0
   const sort = options.sort || ''
   const select = options.select || ''
   const deepPopulate = options.deepPopulate || ''
