@@ -47,8 +47,7 @@ div
           label="分配班级",
           hide-details,
           v-model="bottomSheetItem.parentBanjiId"
-          @change="updateParentBanji",
-          segmented,
+          @change="updateParentBanji",          
           :loading="loadingUpdate")
 </template>
 
