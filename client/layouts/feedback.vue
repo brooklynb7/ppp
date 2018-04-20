@@ -1,7 +1,7 @@
 <template lang="pug">
   v-app
     v-toolbar(app,color="teal",dark,fixed)
-      v-toolbar-title(@click="navToIndex") 意见反馈
+      v-toolbar-title {{$store.state.feedbackToolbarTitle}}
       v-spacer
       avatarName
     v-content

@@ -2,6 +2,7 @@
 
 const parentToolbarTitle = '我是家长'
 const teacherToolbarTitle = '我是老师'
+const feedbackToolbarTitle = '意见反馈'
 
 export const state = () => ({
   user: null,
@@ -10,7 +11,8 @@ export const state = () => ({
   isAuthAdmin: false,
   wechatJsConfig: null,
   parentToolbarTitle: parentToolbarTitle,
-  teacherToolbarTitle: teacherToolbarTitle
+  teacherToolbarTitle: teacherToolbarTitle,
+  feedbackToolbarTitle: feedbackToolbarTitle
 })
 
 export const mutations = {
@@ -44,6 +46,9 @@ export const mutations = {
   },
   setTeacherToolbarTitle (state, title) {
     state.teacherToolbarTitle = title || teacherToolbarTitle
+  },
+  setFeedbackToolbarTitle (state, title) {
+    state.feedbackToolbarTitle = title || feedbackToolbarTitle
   }
 }
 

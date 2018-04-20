@@ -158,10 +158,6 @@ const createMenu = async (ctx) => {
         'type': 'view',
         'name': menuButton.doFeedback.name,
         'url': menuButton.doFeedback.url
-      }, {
-        'type': 'view',
-        'name': menuButton.test.name,
-        'url': menuButton.test.url
       }]
     }]
   })

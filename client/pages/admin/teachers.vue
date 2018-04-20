@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   v-layout(row,wrap)
-    div(class="headline mb-2") 老师列表
+    listHeader(title="老师列表")
     v-flex(xs12,sm12,md12,lg12,xl12)
       v-data-table(class="hidden-sm-and-down",:loading="loading",:items="teachers",class="elevation-1",hide-actions,:headers="headers",:no-data-text="noDataText")
         template(slot="items", slot-scope="props")
@@ -58,9 +58,10 @@ import moment from 'moment'
 import * as _ from 'lodash'
 import formatter from '../../utils/formatter'
 import userItemChip from '../../components/userItemChip'
+import listHeader from '../../components/listHeader'
 
 export default {
-  components: { userItemChip },
+  components: { userItemChip, listHeader },
   data: () => {
     return {
       loadingUpdate: false,

@@ -102,6 +102,16 @@ const apiFactory = axios => ({
   },
   removeZanForPost (id) {
     return axios.$delete(`/api/posts/${id}/zan`)
+  },
+  // Feedback API
+  addFeedback ({ type, detail }) {
+    return axios.$post(`/api/feedbacks`, { type, detail })
+  },
+  getMyFeedbacks () {
+    return axios.$get(`/api/feedbacks/mine`)
+  },
+  getFeedbacks () {
+    return axios.$get(`/api/feedbacks`)
   }
 })
 

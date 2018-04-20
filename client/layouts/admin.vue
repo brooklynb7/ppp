@@ -29,8 +29,8 @@ export default {
       { icon: 'people', text: '家长管理', link: '/admin/parents' },
       { icon: 'view_list', text: '班级管理', link: '/admin/banjis' },
       { icon: 'restaurant_menu', text: '食谱管理', link: '/admin/recipes' },
-      { icon: 'event_note', text: '新闻管理', link: '/admin/news' },
       { icon: 'feedback', text: '意见反馈', link: '/admin/feedbacks' },
+      { icon: 'event_note', text: '新闻管理', link: '/admin/news' },
       { icon: 'help', text: '帮助', link: '/admin/help' }
     ]
   }),

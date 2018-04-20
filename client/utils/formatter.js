@@ -18,6 +18,10 @@ const getProvider = (value) => {
   return rst
 }
 
+const getDateFormat = val => {
+  return moment(val).format('YYYY-MM-DD HH:mm:ss')
+}
+
 const getWholeWeekdays = () => {
   const startDay = moment().startOf('isoWeek')
   const weekdays = [startDay.format('YYYY-MM-DD')]
@@ -75,5 +79,6 @@ export default {
   getGradeList,
   getGradeText,
   getRoleText,
-  getTeacherBanjisText
+  getTeacherBanjisText,
+  getDateFormat
 }
